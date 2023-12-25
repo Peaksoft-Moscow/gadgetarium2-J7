@@ -1,1 +1,0 @@
-![Dia3.png](Dia3.png)
