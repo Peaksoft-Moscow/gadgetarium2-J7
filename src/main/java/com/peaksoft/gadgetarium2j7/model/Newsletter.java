@@ -15,8 +15,8 @@ public class Newsletter {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nameSender;
+    @Column(length = 256)
     private String descriptionSender;
     private String startletter;
     private String endletter;
-
 }
