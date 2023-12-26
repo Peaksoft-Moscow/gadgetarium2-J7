@@ -1,12 +1,10 @@
 package com.peaksoft.gadgetarium2j7.model.entities;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.peaksoft.gadgetarium2j7.model.enums.SubCategory;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import java.util.List;
 
 @Entity
