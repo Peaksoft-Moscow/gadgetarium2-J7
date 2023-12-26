@@ -2,7 +2,7 @@ package com.peaksoft.gadgetarium2j7.mapper;
 
 import com.peaksoft.gadgetarium2j7.model.dto.RegistrationRequest;
 import com.peaksoft.gadgetarium2j7.model.dto.RegistrationResponse;
-import com.peaksoft.gadgetarium2j7.model.entity.User;
+import com.peaksoft.gadgetarium2j7.model.entities.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

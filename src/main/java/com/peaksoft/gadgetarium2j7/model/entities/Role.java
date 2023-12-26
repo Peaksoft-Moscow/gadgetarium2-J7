@@ -1,4 +1,4 @@
-package com.peaksoft.gadgetarium2j7.model.entity;
+package com.peaksoft.gadgetarium2j7.model.entities;
 
 import jakarta.persistence.*;
 import lombok.Getter;

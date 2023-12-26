@@ -1,6 +1,6 @@
 package com.peaksoft.gadgetarium2j7.repository;
 
-import com.peaksoft.gadgetarium2j7.model.entity.User;
+import com.peaksoft.gadgetarium2j7.model.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
