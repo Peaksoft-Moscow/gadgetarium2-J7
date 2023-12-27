@@ -28,6 +28,10 @@ public class UserService {
             log.error("someone has the same email, please change your email");
             throw new RuntimeException("Email is not unique!");
         }
+        if(!user.getEmail().contains("@")){
+            log.error("this isn't email, because your email doesn't have symbol '@'");
+            throw new RuntimeException("Email doesn't have symbol '@'");
+        }
 
         if(user.getPassword().length() < 6){
             log.error("the password is short, make at least 6 letters");
