@@ -28,7 +28,6 @@ public class ProductService {
         return productMapper.mapToResponse(product);
     }
 
-
     public List<ProductResponse> getAll() {
         List<ProductResponse> productResponses = new ArrayList<>();
         for (Product product : productRepository.findAll()) {
@@ -43,12 +42,10 @@ public class ProductService {
         productRepository.deleteById(productId);
     }
 
-
     public ProductResponse getProductById(Long productId) {
         Product product = productRepository.findById(productId).orElseThrow(() -> new EntityNotFoundException("Product with id " + productId + " not found"));
         return productMapper.mapToResponse(product);
     }
-
 
     public SetPriceAndQuantityResponse setPriceAndQuantity(Long id, SetPriceAndQuantity updateRequest) {
         Product product = productRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Product with id " + id + " not found"));
@@ -65,11 +62,5 @@ public class ProductService {
         product.setDescription(setDescription.getDescription());
         productRepository.save(product);
         return productMapper.mapToResponseSetDescription(product);
-
-
-
-
-
     }
-
 }

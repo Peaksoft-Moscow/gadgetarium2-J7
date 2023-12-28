@@ -3,7 +3,10 @@ package com.peaksoft.gadgetarium2j7.model.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.peaksoft.gadgetarium2j7.model.enums.*;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
@@ -58,8 +61,8 @@ public class Product {
     String video;
     String pdf;
     String description;
-    int totalPrice; //Итоговая цена
-    int quantity; //количество
+    int totalPrice;
+    int quantity;
     @Enumerated(value= EnumType.STRING)
     SubCategory subCategory;
 

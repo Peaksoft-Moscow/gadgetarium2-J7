@@ -19,7 +19,6 @@ public class BrandService {
     private final BrandRepository brandRepository;
 
     public BrandResponse creat(BrandRequest brandRequest) {
-        System.out.println("create Brand");
         Brand brand = brandMapper.mapToEntity(brandRequest);
         brandRepository.save(brand);
         return brandMapper.mapToResponse(brand);
