@@ -39,7 +39,7 @@ public class Product {
     String guarantee;
     double discount;
     LocalDate creatDate;
-    String rating;
+    double rating;
     double price;
     String watchband;
     String theMaterialOfTheCase;
