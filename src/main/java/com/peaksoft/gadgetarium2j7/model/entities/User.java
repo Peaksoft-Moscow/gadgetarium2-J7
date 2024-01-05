@@ -54,5 +54,12 @@ public class User {
     @JsonIgnore
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "newsLetter_id")
-    private NewsLetter newsLetter;
+    private Newsletter newsLetter;
+
+    @JsonIgnore
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "compares_products",
+            joinColumns = @JoinColumn(name="user_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id"))
+    private List<Product>products;
 }
