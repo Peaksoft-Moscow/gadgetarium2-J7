@@ -1,7 +1,6 @@
 package com.peaksoft.gadgetarium2j7.model.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.peaksoft.gadgetarium2j7.model.enums.SimOfPhone;
 import com.peaksoft.gadgetarium2j7.model.enums.SubCategory;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -25,6 +24,4 @@ public class Category {
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
     private List<Product> products;
-    @Enumerated(EnumType.STRING)
-    private SimOfPhone simOfPhone; // это поля ,число симмкарт, для телефон.
 }

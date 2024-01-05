@@ -117,7 +117,7 @@ public class ProductService {
                         !getProduct.get(i).getOperatingSystem().equals(getProduct.get(i - 1).getOperatingSystem()) ||
                         !getProduct.get(i).getMemory().equals(getProduct.get(i - 1).getMemory())  ||
                         !(getProduct.get(i).getWeight() == getProduct.get(i - 1).getWeight()) ||
-                        !getProduct.get(i).getCategory().getSimOfPhone().equals(getProduct.get(i - 1).getCategory().getSimOfPhone())) {
+                        !(getProduct.get(i).getSimCard()==(getProduct.get(i - 1).getSimCard()))) {
                     products.add(getProduct.get(i));
                 }
             }

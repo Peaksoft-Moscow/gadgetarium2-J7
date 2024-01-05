@@ -3,6 +3,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
+
 @Entity
 @Table(name="brands")
 @Setter
@@ -14,5 +17,7 @@ public class Brand {
     Long id;
     String name;
     String image;
+    @OneToMany(cascade ={CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH},mappedBy = "brand")
+    private List<Product> products;
 
 }
