@@ -140,5 +140,80 @@ public class ProductService {
             }
         }
     }
+
+    public List<ProductResponse> compare_product(Long id, Principal principal) {
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Product with id " + id + " not found"));
+        User user = userRepository.findByEmail(principal.getName())
+                .orElseThrow(() -> new EntityNotFoundException("User with id " + principal.getName() + " not found"));
+        user.setProducts((List<Product>) product);
+        List<Product> productList = new ArrayList<>();
+            productList.add(productRepository.getAllByProductId(product.getId()));
+        return getResponse(productList);
+    }
+
+    public List<ProductResponse> searchAndPaginationProduct(String category,
+                                                                double min_price,
+                                                                double max_price, String color,
+                                                                String operationMemory,
+                                                                String operationSystem, int page, int size, Principal principal) {
+        Pageable pageable = PageRequest.of(page - 1, size);
+        User user = userRepository.findByEmail(principal.getName())
+                .orElseThrow(() -> new EntityNotFoundException("User with id " + principal.getName() + " not found"));
+        List<Product> productList = user.getProducts();
+        category = category == null ? "" : category;
+        min_price = min_price < 0 ? 0 : min_price;
+        max_price = max_price == 0 ? Double.MAX_VALUE : max_price;
+        color = color == null ? "" : color;
+        operationMemory = operationMemory == null ? "" : operationMemory;
+        operationSystem = operationSystem == null ? "" : operationSystem;
+        List<Product> products = productRepository.getAllProductByFilter(category, min_price, max_price, color,
+                OperationMemory.valueOf(operationMemory), OperationSystem.valueOf(operationSystem), pageable);
+        return getResponse(products);
+    }
+
+    public List<ProductResponse> getProductByCategory(String category, boolean difference, Principal principal) {
+        List<Product> products = new ArrayList<>();
+        User user = userRepository.findByEmail(principal.getName())
+                .orElseThrow(() -> new EntityNotFoundException("User with id " + principal.getName() + " not found"));
+        List<Product> getProduct = productRepository.getProductByCategory(user.getId(), category);
+        if (difference) {
+            for (int i = 1; i < getProduct.size(); i++) {
+                if (!getProduct.get(i).getBrand().equals(getProduct.get(i - 1).getBrand()) ||
+                        !getProduct.get(i).getScreen().equals(getProduct.get(i - 1).getScreen()) ||
+                        !getProduct.get(i).getColor().equals(getProduct.get(i - 1).getColor()) ||
+                        !getProduct.get(i).getOperatingSystem().equals(getProduct.get(i - 1).getOperatingSystem()) ||
+                        !getProduct.get(i).getMemory().equals(getProduct.get(i - 1).getMemory())  ||
+                        !(getProduct.get(i).getWeight() == getProduct.get(i - 1).getWeight()) ||
+                        !(getProduct.get(i).getSimCard()==(getProduct.get(i - 1).getSimCard()))) {
+                    products.add(getProduct.get(i));
+                }
+            }
+            return getResponse(products);
+        }
+        return getResponse(getProduct);
+    }
+
+    // в этом методе  из класса Product  получаем ResponseProduct.
+    public List<ProductResponse> getResponse(List<Product> products) {
+        List<ProductResponse> responses = new ArrayList<>();
+        for (Product product : products) {
+            responses.add(productMapper.mapToResponse(product));
+        }
+        return responses;
+    }
+
+    public void deleteProductInCompare(Principal principal) {
+        User user = userRepository.findByEmail(principal.getName())
+                .orElseThrow(() -> new EntityNotFoundException("User with id " + principal.getName() + " not found"));
+        List<Product> productList = user.getProducts();
+        List<Product> products = new ArrayList<>();
+        for (Product product : productList) {
+            products.add(productRepository.getAllByProductId(product.getId()));
+            for (Product product1 : products) {
+                productRepository.deleteById(product1.getId());
+            }
+        }
+    }
 }
 
