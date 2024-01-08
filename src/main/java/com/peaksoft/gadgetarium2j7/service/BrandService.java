@@ -56,5 +56,4 @@ public class BrandService {
         return brandRepository.existsById(id);
     }
 
-
 }
