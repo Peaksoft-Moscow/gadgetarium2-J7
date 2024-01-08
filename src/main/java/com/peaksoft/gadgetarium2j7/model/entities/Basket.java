@@ -2,6 +2,7 @@ package com.peaksoft.gadgetarium2j7.model.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -28,8 +29,14 @@ public class Basket {
     @JsonIgnore
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "basket")
     private User user;
-    @ManyToMany(cascade = {CascadeType.REFRESH, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "basketList")
+
+    @ManyToMany(cascade = {CascadeType.REFRESH, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "productList")
     @JsonIgnore
-    private List<Product> productList;
+    private List<Product> productsz;
+
+    public List<ProductAmount> getProductAmountList() {
+        return user.getBasket().getProductAmountList();
+    }
+
 
 }

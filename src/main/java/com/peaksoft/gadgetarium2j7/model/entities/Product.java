@@ -40,7 +40,7 @@ public class Product {
     double discount;
     LocalDate creatDate;
     String rating;
-    double price;
+    int price;
     String watchband;
     String theMaterialOfTheCase;
     String smartWatchSize;
@@ -77,6 +77,9 @@ public class Product {
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "product_orders", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "order_id"))
     private List<Order> orderList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private List<ProductAmount> productAmounts = new ArrayList<>();
 
 
 }
