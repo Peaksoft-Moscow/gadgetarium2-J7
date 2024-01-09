@@ -30,7 +30,7 @@ public class Basket {
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "basket")
     private User user;
 
-    @ManyToMany(cascade = {CascadeType.REFRESH, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "productList")
+    @ManyToMany(cascade = {CascadeType.REFRESH, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.MERGE})
     @JsonIgnore
     private List<Product> productsz;
 
