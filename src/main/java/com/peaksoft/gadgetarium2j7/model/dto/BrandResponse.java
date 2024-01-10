@@ -8,6 +8,6 @@ import lombok.Setter;
 @Getter
 @Builder
 public class BrandResponse {
-    private String image;
     private String name;
+    private String image;
 }

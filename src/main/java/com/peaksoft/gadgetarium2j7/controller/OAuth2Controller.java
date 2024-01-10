@@ -2,6 +2,7 @@ package com.peaksoft.gadgetarium2j7.controller;
 
 import com.peaksoft.gadgetarium2j7.service.OAuth2Service;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,7 @@ import java.util.Map;
 @RequestMapping("/api/oauth2")
 @RequiredArgsConstructor
 public class OAuth2Controller {
+
     private final OAuth2Service oAuth2Service;
 
     @GetMapping("/")

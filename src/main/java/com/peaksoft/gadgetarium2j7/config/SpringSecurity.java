@@ -25,10 +25,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableMethodSecurity
 @EnableWebSecurity
 @RequiredArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class SpringSecurity {
 
-    JwtFilter jwtFilter;
+    final JwtFilter jwtFilter;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -54,8 +54,24 @@ public class SpringSecurity {
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> {
-                    authorize.requestMatchers("/api/auth/sing-up", "/api/auth/sign-in").permitAll()
-                            .anyRequest().authenticated();
+                    authorize
+                     .requestMatchers("/api/users/sign-up", "/api/auth/sign-in").permitAll()
+                     .requestMatchers("/swagger-ui/**",
+                                    "/swagger-resources/*",
+                                    "/v3/api-docs/**").permitAll()
+
+                    .requestMatchers("/api/products/add-product").permitAll()
+                    .requestMatchers("/api/products/setDescription/{id}").hasAnyAuthority("ADMIN", "USER")
+                    .requestMatchers("/api/products/setPriceAndQuantity/{id}").hasAuthority("ADMIN")
+                    .requestMatchers("/api/products/{id}").hasAuthority("ADMIN")
+                    .requestMatchers("/api/products/get-all").hasAnyAuthority("ADMIN", "USER")
+                    .requestMatchers("/api/products/search-product/{id}").hasAnyAuthority("ADMIN", "USER")
+                    .requestMatchers("/api/products/compare-product/{id}").hasAnyAuthority("ADMIN", "USER")
+                    .requestMatchers("/api/products/search-product-by-filter").hasAnyAuthority("ADMIN", "USER")
+                    .requestMatchers("/api/products/delete-product-in-compare   ").hasAnyAuthority("ADMIN", "USER")
+                    .requestMatchers("/api/products/get-all-products-by-category").hasAnyAuthority("ADMIN", "USER")
+
+                    .anyRequest().authenticated();
                 })
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();

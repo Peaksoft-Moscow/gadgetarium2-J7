@@ -13,10 +13,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -30,7 +27,7 @@ public class AuthController {
     JwtUtil jwtUtil;
     UserDetailsService userDetailsService;
 
-    @PostMapping("sign-in")
+    @GetMapping("/sign-in")
     @Operation(description = "Аутентификация пользователя и возвращение токенов и ролей")
     public LoginResponse signIn(@RequestBody LoginRequest loginRequest) {
         User user = userRepository.findByEmail(loginRequest.getEmail())

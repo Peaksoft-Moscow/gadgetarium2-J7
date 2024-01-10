@@ -5,9 +5,11 @@ import com.peaksoft.gadgetarium2j7.model.dto.RegistrationRequest;
 import com.peaksoft.gadgetarium2j7.model.dto.RegistrationResponse;
 import com.peaksoft.gadgetarium2j7.model.entities.Role;
 import com.peaksoft.gadgetarium2j7.model.entities.User;
+import com.peaksoft.gadgetarium2j7.repository.RoleRepository;
 import com.peaksoft.gadgetarium2j7.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -20,6 +22,8 @@ import java.util.List;
 public class UserService {
     private final UserMapper userMapper;
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public RegistrationResponse registration(RegistrationRequest request) {
         User user = userMapper.mapToEntity(request);
@@ -33,7 +37,6 @@ public class UserService {
             log.error("this isn't email, because your email doesn't have symbol '@'");
             throw new RuntimeException("Email doesn't have symbol '@'");
         }
-
         if (user.getPassword().length() < 6) {
             log.error("the password is short, make at least 6 letters");
             throw new RuntimeException("Password is short");
@@ -72,11 +75,28 @@ public class UserService {
                 throw new RuntimeException("password without letter");
             }
         }
-
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
         List<Role> roles = new ArrayList<>();
-        Role role = new Role("USER");
-        roles.add(role);
+        if (userRepository.findAll().isEmpty()) {
+            Role role = roleRepository.findByName("ADMIN");
+            if (role == null) {
+                role = new Role("ADMIN");
+            }
+            roles.add(role);
+        } else {
+            Role role = roleRepository.findByName("USER");
+            if (role == null) {
+                role = new Role("USER");
+            }
+            roles.add(role);
+        }
         user.setRoles(roles);
+
+//        List<Role> roles = new ArrayList<>();
+//        Role role = new Role("USER");
+//        roles.add(role);
+//        user.setRoles(roles);
+
         userRepository.save(user);
         return userMapper.registration(user);
     }

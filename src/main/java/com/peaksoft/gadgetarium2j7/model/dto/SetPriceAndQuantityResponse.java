@@ -2,6 +2,8 @@ package com.peaksoft.gadgetarium2j7.model.dto;
 
 import com.peaksoft.gadgetarium2j7.model.enums.Memory;
 import com.peaksoft.gadgetarium2j7.model.enums.OperationMemory;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,7 +16,9 @@ import java.time.LocalDate;
 public class SetPriceAndQuantityResponse {
     private String brandName;
     private String color;
+    @Enumerated(EnumType.STRING)
     private Memory memory;
+    @Enumerated(EnumType.STRING)
     private OperationMemory operationMemory;
     private int simCard;
     private LocalDate releaseDate;

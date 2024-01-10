@@ -21,6 +21,7 @@ public class Role implements GrantedAuthority {
     private String name;
     @ManyToMany(cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH},mappedBy = "roles")
     private List<User> users = new ArrayList<>();
+
     public Role(String name){
         this.name = name;
     }

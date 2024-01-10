@@ -12,12 +12,13 @@ import java.security.Principal;
 import java.util.List;
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/products")
+@RequestMapping("/api/products")
 public class ProductController {
 
     private final ProductService productService;
-    @PostMapping()
+    @PostMapping("/add-product")
     public ResponseEntity<ProductResponse> add(@RequestBody ProductRequest productRequest){
+        System.out.println("controller before product ");
         ProductResponse response = productService.create(productRequest);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
@@ -38,20 +39,22 @@ public class ProductController {
         return "Delete product with id:" + id +" successfully delete";
    }
 
-   @GetMapping()
+   @GetMapping("/get-all")
     public List<ProductResponse> getAllProduct(){
         return productService.getAll();
    }
 
-   @GetMapping("/{id}")
+   @GetMapping("/search-product/{id}")
     public ProductResponse findById(@PathVariable Long id){
         return productService.getProductById(id);
    }
-   @PutMapping("/compare/{id}") // этот метод сравнивает продуктa.
-    public List<ProductResponse> compare_product(@PathVariable("id") Long id, Principal principal){
-        return  productService.compare_product(id,principal);
+   @PutMapping("/compare-product/{id}") // этот метод сравнивает продуктa.
+    public String compare_product(@PathVariable("id") Long id, Principal principal){
+       System.out.println(("product controller "));
+         productService.compare_product(id,principal);
+         return " Sucsess add! ";
    }
-    @GetMapping("/search-productbyfilter")
+    @GetMapping("/search-product-by-filter")
     public List<ProductResponse> searchAndPaginationProduct(@RequestParam String category,
                                                                 @RequestParam double min_price,
                                                                 @RequestParam double max_price,@RequestParam String color,
@@ -61,7 +64,7 @@ public class ProductController {
         return productService.searchAndPaginationProduct(category, min_price, max_price, color, operationMemory,
                 operationSystem, page, size,principal);
     }
-    @DeleteMapping("/delete-products")
+    @DeleteMapping("/delete-product -in-compare")
     public String deleteProductInCompare(Principal principal){
         productService.deleteProductInCompare(principal);
         return " Successful delete! ";

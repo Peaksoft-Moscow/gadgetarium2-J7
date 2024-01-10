@@ -22,11 +22,11 @@ import java.util.Collection;
 
 @Component
 @RequiredArgsConstructor
-@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
+//@FieldDefaults( level = AccessLevel.PRIVATE)
 public class JwtFilter extends OncePerRequestFilter {
 
-    JwtUtil jwtUtil;
-    UserDetailServiceImpl userDetailsService;
+    private final JwtUtil jwtUtil;
+    private final UserDetailServiceImpl userDetailsService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,

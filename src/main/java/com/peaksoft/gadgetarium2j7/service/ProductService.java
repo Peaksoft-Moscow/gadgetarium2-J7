@@ -2,12 +2,14 @@ package com.peaksoft.gadgetarium2j7.service;
 
 import com.peaksoft.gadgetarium2j7.model.dto.*;
 import com.peaksoft.gadgetarium2j7.model.entities.Brand;
+import com.peaksoft.gadgetarium2j7.model.entities.Category;
 import com.peaksoft.gadgetarium2j7.model.entities.Product;
 import com.peaksoft.gadgetarium2j7.mapper.ProductMapper;
 import com.peaksoft.gadgetarium2j7.model.entities.User;
 import com.peaksoft.gadgetarium2j7.model.enums.OperationMemory;
 import com.peaksoft.gadgetarium2j7.model.enums.OperationSystem;
 import com.peaksoft.gadgetarium2j7.repository.BrandRepository;
+import com.peaksoft.gadgetarium2j7.repository.CategoryRepository;
 import com.peaksoft.gadgetarium2j7.repository.ProductRepository;
 import com.peaksoft.gadgetarium2j7.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -27,10 +29,12 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final BrandRepository brandRepository;
     private final UserRepository userRepository;
+    private final CategoryRepository categoryRepository;
 
     public ProductResponse create(ProductRequest productRequest) {
         Product product = productMapper.mapToEntity(productRequest);
-        Brand brand = brandRepository.findByName(productRequest.getBrandName()).orElseThrow(() -> new EntityNotFoundException("Brand not found"));
+        Brand brand = brandRepository.findByName(productRequest.getBrandName())
+                .orElseThrow(() -> new EntityNotFoundException("Brand not found"));
         product.setBrandName(brand.getName());
         product.setBrand(brand);
         productRepository.save(product);
@@ -73,15 +77,15 @@ public class ProductService {
         return productMapper.mapToResponseSetDescription(product);
     }
 
-    public List<ProductResponse> compare_product(Long id, Principal principal) {
-        Product product = productRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Product with id " + id + " not found"));
+    public void compare_product(Long id, Principal principal) {
         User user = userRepository.findByEmail(principal.getName())
                 .orElseThrow(() -> new EntityNotFoundException("User with id " + principal.getName() + " not found"));
-        user.setProducts((List<Product>) product);
-        List<Product> productList = new ArrayList<>();
-            productList.add(productRepository.getAllByProductId(product.getId()));
-        return getResponse(productList);
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Product with id " + id + " not found"));
+        List<Product>products=new ArrayList<>();
+        products.add(product);
+        user.getProducts(products);
+        productRepository.save(product);
     }
 
     public List<ProductResponse> searchAndPaginationProduct(String category,

@@ -13,6 +13,7 @@ import java.util.List;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product,Long> {
+
     @Query("select  p from  Product  p join  p.users u where p.id=:id")
     Product getAllByProductId (@Param("id") Long id );
     @Query("select  p from Product p join p.users u where upper(p.name) like:name and (p.price between :min and :max)" +
