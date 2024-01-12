@@ -1,7 +1,6 @@
 package com.peaksoft.gadgetarium2j7.mapper;
 import com.peaksoft.gadgetarium2j7.model.dto.*;
 import com.peaksoft.gadgetarium2j7.model.entities.Product;
-import com.peaksoft.gadgetarium2j7.model.entities.SpecialProducts;
 import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 
@@ -63,22 +62,6 @@ public class ProductMapper {
                 .video(product.getVideo())
                 .pdf(product.getPdf())
                 .description(product.getDescription())
-                .build();
-    }
-
-    public SpecialProducts mapToEntities(SpecialProductsRequest request){
-        SpecialProducts specialProducts = new SpecialProducts();
-        specialProducts.setName(request.getName());
-        return specialProducts;
-    }
-
-    public SpecialProductsResponse mapToResponses(SpecialProducts specialProducts){
-        return SpecialProductsResponse.builder()
-                .name(specialProducts.getName())
-                .newProducts(specialProducts.getNewProducts())
-                .id(specialProducts.getId())
-                .recommendedProducts(specialProducts.getRecommendedProducts())
-                .discountProducts(specialProducts.getDiscountProducts())
                 .build();
     }
 }

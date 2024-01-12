@@ -14,11 +14,6 @@ import java.util.List;
 public class ProductController {
 
     private final ProductService productService;
-
-    @GetMapping("/main-page")
-    public SpecialProductsResponse specialProducts(){
-        return productService.getSpecialProducts();
-    }
     @PostMapping()
     public ResponseEntity<ProductResponse> add(@RequestBody ProductRequest productRequest){
         ProductResponse response = productService.create(productRequest);
