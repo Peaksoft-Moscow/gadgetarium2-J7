@@ -5,6 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "productAmount")
 @Getter
@@ -21,5 +24,7 @@ public class ProductAmount {
     private int totalPrice; //общая цена
     @ManyToOne(cascade = CascadeType.ALL)
     private Basket basket;
+
+
 
 }

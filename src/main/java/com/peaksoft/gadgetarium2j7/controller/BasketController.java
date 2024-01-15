@@ -1,14 +1,18 @@
 package com.peaksoft.gadgetarium2j7.controller;
 
 import com.peaksoft.gadgetarium2j7.model.dto.BasketResponse;
+import com.peaksoft.gadgetarium2j7.model.dto.ProductResponse;
 import com.peaksoft.gadgetarium2j7.model.entities.Product;
 import com.peaksoft.gadgetarium2j7.model.entities.User;
+import com.peaksoft.gadgetarium2j7.repository.UserRepository;
 import com.peaksoft.gadgetarium2j7.service.BasketService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -18,33 +22,34 @@ public class BasketController {
     private final BasketService  basketService;
 
 
-    @PostMapping("/addProduct")
-    public ResponseEntity<BasketResponse> addProductToBasket(@RequestParam Long productId, @RequestParam String email) {
-        BasketResponse response = basketService.addProductToBasket(productId, email);
+    @PostMapping()
+    public ResponseEntity<BasketResponse> addProductToBasket(@RequestParam Long productId, Principal principal) {
+        BasketResponse response = basketService.addProductToBasket(productId, principal);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @DeleteMapping("/deleteProduct")
-    public ResponseEntity<String> deleteProduct(@RequestParam Long productId, @RequestParam String email) {
-        basketService.deleteProduct(productId, email);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteById(@RequestParam Long productId, Principal principal) {
+        basketService.deleteProduct(productId, principal);
         return new ResponseEntity<>("Товар успешно удален из корзины", HttpStatus.OK);
     }
 
-    @GetMapping("/getProductsInBasket")
-    public List<Product> getProductsInBasket(@RequestParam Long userId) {
-        return basketService.getProductsInBasket(userId);
+    @GetMapping("/findAll")
+    public List<Product> findAll(Principal principal) {
+        return basketService.getProductsInBasket(principal);
     }
 
     @PostMapping("/clearBasket")
-    public void clearBasket(@RequestParam Long userId) {
-        basketService.clearBasket(userId);
+    public void clearBasket(Principal principal) {
+        basketService.clearBasket(principal);
 }
 
-//    @GetMapping("/product/{id}")
-//    public ResponseEntity<Product> getProductFromBasket(@PathVariable Long id, @AuthenticationPrincipal User userDetails) {
-//        Product product = basketService.getProductFromBasket(id, userDetails.getEmail());
-//        return ResponseEntity.ok(product);
-//    }
+    @GetMapping("/{id}")
+    public ProductResponse findById(@Param("id") Long productId, Principal principal) {
+        System.out.println("in controller");
+        return basketService.findProductById(productId, principal);
+    }
+
 
 
 }

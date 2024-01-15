@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -22,21 +23,23 @@ public class Basket {
     private double discount;
     private int amount;
 
-    @JsonIgnore
-    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinTable(name = "users_baskets", joinColumns = @JoinColumn(name = "users_id"), inverseJoinColumns = @JoinColumn(name = "baskets_id"))
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "basket_products",
+            joinColumns = @JoinColumn(name = "basket_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id"))
     private List<Product> products;
+
     @JsonIgnore
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "basket")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="user_id")
     private User user;
 
     @ManyToMany(cascade = {CascadeType.REFRESH, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.MERGE})
     @JsonIgnore
     private List<Product> productsz;
 
-    public List<ProductAmount> getProductAmountList() {
-        return user.getBasket().getProductAmountList();
-    }
+
 
 
 }

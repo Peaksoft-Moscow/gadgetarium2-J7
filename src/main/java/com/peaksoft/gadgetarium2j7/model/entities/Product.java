@@ -78,8 +78,6 @@ public class Product {
     @JoinTable(name = "product_orders", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "order_id"))
     private List<Order> orderList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-    private List<ProductAmount> productAmounts = new ArrayList<>();
 
 
 }
