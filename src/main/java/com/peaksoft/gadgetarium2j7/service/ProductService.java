@@ -10,7 +10,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -62,5 +65,33 @@ public class ProductService {
         product.setDescription(setDescription.getDescription());
         productRepository.save(product);
         return productMapper.mapToResponseSetDescription(product);
+
     }
+    public List<Product> findProductsByCriteria(ProductRequest productRequest) {
+        return productRepository.findProducts(
+                productRequest.getName(),
+                productRequest.getBrandName(),
+                productRequest.getPriceFrom(),
+                productRequest.getPriceTo(),
+                productRequest.getColor(),
+                productRequest.getMemory(),
+                productRequest.getOperatingSystem(),
+                productRequest.getWaterResistance()
+        );
+    }
+   /* List<Product>products = new ArrayList<>();
+         Collections.sort(products, Comparator.comparingDouble(Product::getDiscount));
+
+
+    List<Product> productsWithDiscountUpTo50 = products.stream()
+            .filter(product -> product.getDiscount() <= 50)
+            .collect(Collectors.toList());
+
+    List<Product> productsWithDiscountOver50 = products.stream()
+            .filter(product -> product.getDiscount() > 50)
+            .collect(Collectors.toList());
+
+
+        return products;*/
 }
+

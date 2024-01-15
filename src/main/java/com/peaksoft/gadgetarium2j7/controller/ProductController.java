@@ -1,6 +1,7 @@
 package com.peaksoft.gadgetarium2j7.controller;
 
 import com.peaksoft.gadgetarium2j7.model.dto.*;
+import com.peaksoft.gadgetarium2j7.model.entities.Product;
 import com.peaksoft.gadgetarium2j7.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -45,4 +46,10 @@ public class ProductController {
     public ProductResponse findById(@PathVariable Long id){
         return productService.getProductById(id);
    }
+
+    @PostMapping("/search")
+    public ResponseEntity<List<Product>> searchProducts(@RequestBody ProductRequest productRequest) {
+        List<Product> foundProducts = productService.findProductsByCriteria(productRequest);
+        return ResponseEntity.ok(foundProducts);
+    }
 }
