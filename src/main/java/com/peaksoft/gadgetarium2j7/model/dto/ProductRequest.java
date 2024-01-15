@@ -8,9 +8,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.util.List;
 
 @Setter
 @Getter
@@ -35,14 +32,6 @@ public class ProductRequest {
     private String image;
     private OperationMemory operationMemory;
     private int simCard;
-
-
-
-    private double priceFrom;
-    private double priceTo;
-
-
-    private OperationSystem operatingSystem;
 
 
 }
