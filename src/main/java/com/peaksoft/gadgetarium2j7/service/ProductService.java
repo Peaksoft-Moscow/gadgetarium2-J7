@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+
 @Service
 @RequiredArgsConstructor
 public class ProductService {
@@ -63,7 +64,12 @@ public class ProductService {
         product.setDescription(setDescription.getDescription());
         productRepository.save(product);
         return productMapper.mapToResponseSetDescription(product);
-
+    }
+    public List<Product> getAllProductsWithDiscount() {
+        return productRepository.findProductsByDiscount();
+    }
+    public List<Product> findAllSortedBy(String sortBy) {
+        return productRepository.findAllSortedBy(sortBy);
     }
 }
 
