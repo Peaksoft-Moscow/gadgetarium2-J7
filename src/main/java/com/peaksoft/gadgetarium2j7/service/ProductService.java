@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -62,5 +63,32 @@ public class ProductService {
         product.setDescription(setDescription.getDescription());
         productRepository.save(product);
         return productMapper.mapToResponseSetDescription(product);
+    }
+    public List<Product> searchProducts(ProductRequest productRequest) {
+        return productRepository.searchProducts(
+                productRequest.getName(),
+                productRequest.getBrandName() != null ? productRequest.getBrandName() : null,
+                productRequest.getPriceFrom(),
+                productRequest.getPriceTo(),
+                productRequest.getColor(),
+                productRequest.getMemory(),
+                productRequest.getOperatingSystem(),
+                productRequest.getWaterResistance(),
+                productRequest.getCategory() != null ? productRequest.getCategory().getName() : null,
+                productRequest.getCategory() != null ? String.valueOf(productRequest.getCategory().getSubCategory()) : null
+        );
+    }
+    public List<Product> searchProducts2(ProductRequest productRequest) {
+        return productRepository.searchProducts2(
+                productRequest.getName(),
+                productRequest.getCategory() != null ? Collections.singleton(productRequest.getCategory().getName()) : null,
+                productRequest.getBrandNames(),
+                productRequest.getPriceFrom(),
+                productRequest.getPriceTo(),
+                productRequest.getColors(),
+                Collections.singleton(productRequest.getMemory()),
+                productRequest.getOperatingSystems(),
+                productRequest.getWaterResistance()
+        );
     }
 }

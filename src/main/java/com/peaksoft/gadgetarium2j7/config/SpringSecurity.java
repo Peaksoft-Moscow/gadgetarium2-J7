@@ -54,7 +54,7 @@ public class SpringSecurity {
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> {
-                    authorize.requestMatchers("/api/auth/sing-up", "/api/auth/sign-in").permitAll()
+                    authorize.requestMatchers("/api/users/sign-up","/api/auth/sing-up", "/api/auth/sign-in","/products","/products/search").permitAll()
                             .anyRequest().authenticated();
                 })
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)

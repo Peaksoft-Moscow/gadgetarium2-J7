@@ -24,4 +24,8 @@ public class Category {
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
     private List<Product> products;
+
+    public Category getSubCategories() {
+        return getSubCategories();
+    }
 }
