@@ -10,7 +10,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class OrderDto{
+public class OrderRequest {
     private String address;
     private int sum;
     private String userAddress;
