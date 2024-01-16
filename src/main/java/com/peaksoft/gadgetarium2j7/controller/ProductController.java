@@ -94,4 +94,10 @@ public class ProductController {
 
         return new ResponseEntity<>(sortedProducts, HttpStatus.OK);
     }
+    @GetMapping("/resetFilters")
+    public ResponseEntity<List<Product>> resetFilters() {
+        List<Product> allProducts = productRepository.findAll();
+        return new ResponseEntity<>(allProducts, HttpStatus.ACCEPTED);
+    }
+
 }
