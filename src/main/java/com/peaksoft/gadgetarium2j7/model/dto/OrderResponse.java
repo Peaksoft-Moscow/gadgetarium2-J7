@@ -1,6 +1,7 @@
 package com.peaksoft.gadgetarium2j7.model.dto;
 
 import com.peaksoft.gadgetarium2j7.model.entities.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,6 +10,7 @@ import java.util.List;
 
 @Getter
 @Setter
+@Builder
 public class OrderResponse {
     private Long id;
     private String address;
