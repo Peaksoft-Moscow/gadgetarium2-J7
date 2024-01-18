@@ -28,7 +28,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class SpringSecurity {
-    @Autowired
+
     final JwtFilter jwtFilter;
 
     @Bean
@@ -56,7 +56,7 @@ public class SpringSecurity {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> {
                     authorize
-//                     .requestMatchers("/api/users/sign-up", "/api/auth/sign-in").permitAll()
+                     .requestMatchers("/api/users/sign-up", "/api/auth/sign-in").permitAll()
                      .requestMatchers("/swagger-ui/**",
                                     "/swagger-resources/*",
                                     "/v3/api-docs/**").permitAll()
@@ -69,11 +69,8 @@ public class SpringSecurity {
                     .requestMatchers("/api/products/search-product/{id}").hasAnyAuthority("ADMIN", "USER")
                     .requestMatchers("/api/products/compare-product/{id}").hasAnyAuthority("ADMIN", "USER")
                     .requestMatchers("/api/products/search-product-by-filter").hasAnyAuthority("ADMIN", "USER")
-                    .requestMatchers("/api/products/delete-product-in-compare   ").hasAnyAuthority("ADMIN", "USER")
+                    .requestMatchers("/api/products/delete").hasAnyAuthority("ADMIN", "USER")
                     .requestMatchers("/api/products/get-all-products-by-category").hasAnyAuthority("ADMIN", "USER")
-
-                    .anyRequest().authenticated();
-                    authorize.requestMatchers("/api/users/sign-up", "/api/auth/sign-in").permitAll()
                             .anyRequest().authenticated();
                 })
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)

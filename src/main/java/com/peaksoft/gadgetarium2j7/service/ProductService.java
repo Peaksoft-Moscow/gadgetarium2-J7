@@ -106,6 +106,8 @@ public class ProductService {
                     products.add(getProduct.get(i));
                 }
             }
+            System.out.println();
+            System.out.println(products);
             return getResponse(products);
         }
         return getResponse(getProduct);
@@ -124,7 +126,10 @@ public class ProductService {
         User user = userRepository.findByEmail(principal.getName())
                 .orElseThrow(() -> new EntityNotFoundException("User with id " + principal.getName() + " not found"));
         List<Product> productList =productRepository.getProductByUser(user.getId());
-        productList.clear();
+        user.setProducts(productList);
+       productList.clear();
+       productRepository.saveAll(productList);
+       userRepository.save(user);
         }
 }
 

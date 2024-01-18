@@ -56,7 +56,7 @@ public class ProductController {
          productService.compare_product(id,principal);
          return " Sucsess add! ";
    }
-    @DeleteMapping("/delete-product -in-compare")
+    @DeleteMapping("/delete")
     @Operation(description = "Очистить все продукты из таблицы сравнение( compare_product ). ")
     public String deleteProductInCompare(Principal principal){
         productService.deleteProductInCompare(principal);
@@ -64,10 +64,11 @@ public class ProductController {
     }
     @GetMapping("/get-all-products-by-category")
     @Operation(description = "Получение продукта по категориям из таблицы сравнение( compare_product ). ")
-    public List<ProductResponse> getAllProductByCategory(@RequestParam("category") String category,
-                                                         @RequestParam(value = "difference",required = false)boolean difference,
-                                                         Principal principal){
-        return productService.getProductByCategory(category,difference,principal);
+    public List<ProductResponse> getAllProductByCategory(
+                                    @RequestParam("category") String category,
+                                    @RequestParam(value = "difference",required = false)boolean difference,
+                                    Principal principal){
+        return productService.getProductByCategory(category, difference,principal);
     }
 
 

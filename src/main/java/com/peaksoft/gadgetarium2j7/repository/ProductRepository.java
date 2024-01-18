@@ -12,13 +12,16 @@ import java.util.List;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product,Long> {
+    @Query("select p from Product p join  p.users u ")
+    List<Product>getAllProduct();
     @Query("select p from Product  p join  p.users u where  u.id=:userId")
     List<Product>getProductByUser(@Param("userId") Long userId);
 
     @Query("select  p from  Product  p join  p.users u where p.id=:id")
     Product getAllByProductId (@Param("id") Long id );
 
-    @Query("select p from Product p join p.users u where p.category.name = :category and u.id=:id")
+    @Query("select p from Product p join p.users u where p.category.name =:category " +
+            "and u.id=:id")
     List<Product>getProductByCategory(@Param("id")Long id,@Param("category")String category);
 
 
