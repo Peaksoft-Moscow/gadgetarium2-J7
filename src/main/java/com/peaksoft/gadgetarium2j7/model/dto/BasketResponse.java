@@ -10,7 +10,7 @@ import java.util.List;
 @Getter
 public class BasketResponse {
     private Long id;
-    private int amount;// сумма обшая
+    private int amount;// сумма
     private double discount;// скидка
     private int  quantity;// количество
     private double total; // итого

@@ -13,7 +13,7 @@ public class BasketMapper {
         basketResponse.setAmount(basket.getAmount());
         basketResponse.setDiscount(basket.getDiscount());
         basketResponse.setTotal(basket.getTotal());
-        basketResponse.setProductList(basket.getProductsz());
+        basketResponse.setProductList(basket.getProducts());
         return basketResponse;
     }
 }

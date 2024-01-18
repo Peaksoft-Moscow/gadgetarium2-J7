@@ -2,12 +2,10 @@ package com.peaksoft.gadgetarium2j7.model.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -22,9 +20,10 @@ public class Basket {
     private double total;
     private double discount;
     private int amount;
+    private int quantity;
 
-
-    @ManyToMany(cascade = CascadeType.ALL)
+    @JsonIgnore
+    @ManyToMany(cascade ={CascadeType.PERSIST,CascadeType.REFRESH,CascadeType.DETACH})
     @JoinTable(name = "basket_products",
             joinColumns = @JoinColumn(name = "basket_id"),
             inverseJoinColumns = @JoinColumn(name = "product_id"))
@@ -35,9 +34,7 @@ public class Basket {
     @JoinColumn(name="user_id")
     private User user;
 
-    @ManyToMany(cascade = {CascadeType.REFRESH, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.MERGE})
-    @JsonIgnore
-    private List<Product> productsz;
+
 
 
 

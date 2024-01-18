@@ -78,6 +78,7 @@ public class Product {
     @JoinTable(name = "product_orders", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "order_id"))
     private List<Order> orderList = new ArrayList<>();
 
-
+ @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.REFRESH,CascadeType.DETACH},mappedBy = "products")
+  private List<Basket>baskets;
 
 }

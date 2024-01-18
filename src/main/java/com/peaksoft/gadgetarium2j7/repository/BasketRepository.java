@@ -6,9 +6,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface BasketRepository extends JpaRepository<Basket,Long> {
-    @Query("DELETE FROM Basket b WHERE b.user.id = :userId")
-    void clearBasketForUser(@Param("userId") Long userId);
+    @Query("select b FROM Basket b WHERE b.user.id = :id")
+    Optional<Basket>findBasketByUserId(@Param("id")Long id);
 
 }
