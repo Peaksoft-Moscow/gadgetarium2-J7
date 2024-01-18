@@ -1,6 +1,5 @@
 package com.peaksoft.gadgetarium2j7.service;
 
-import com.peaksoft.gadgetarium2j7.model.entities.Role;
 import com.peaksoft.gadgetarium2j7.model.entities.User;
 import com.peaksoft.gadgetarium2j7.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,11 +14,12 @@ import java.util.Map;
 @Service
 @RequiredArgsConstructor
 public class OAuth2Service {
+
     private final UserRepository userRepository;
 
     public Map<String, Object> saveWithGoogle(OAuth2AuthenticationToken oAuth2AuthenticationToken) throws IllegalAccessException {
         OAuth2AuthenticatedPrincipal principal = oAuth2AuthenticationToken.getPrincipal();
-        if (oAuth2AuthenticationToken == null) {
+        if (oAuth2AuthenticationToken==(null)) {
             throw new IllegalAccessException("The token must not be null");
         }
         Map<String, Object> attributes = principal.getAttributes();

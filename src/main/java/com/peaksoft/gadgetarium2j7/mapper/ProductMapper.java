@@ -9,13 +9,12 @@ public class ProductMapper {
     public Product mapToEntity(ProductRequest productRequest){
         Product product = new Product();
         product.setName(productRequest.getName());
-        product.setCategory(productRequest.getCategory());
-        product.setSubCategory(productRequest.getCategory().getSubCategory());
+        product.setBrandName(productRequest.getBrandName());
+        product.setCategory(productRequest.getCategoryName());
         product.setGuarantee(productRequest.getGuarantee());
         product.setMemory(productRequest.getMemory());
         product.setColor(productRequest.getColor());
         product.setCreatDate(LocalDate.now());
-        product.setGender(productRequest.getGender());
         product.setSimCard(productRequest.getSimCard());
         product.setWirelessInterface(productRequest.getWirelessInterface());
         product.setWaterResistance(productRequest.getWaterResistance());
@@ -27,8 +26,10 @@ public class ProductMapper {
 
      public ProductResponse mapToResponse(Product product){
         return ProductResponse.builder()
+                .name(product.getName())
                 .id(product.getId())
                 .brandName(product.getBrandName())
+                .categoryName(product.getCategory())
                 .memory(product.getMemory())
                 .color(product.getColor())
                 .rating(product.getRating())

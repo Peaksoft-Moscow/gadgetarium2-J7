@@ -5,9 +5,8 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import lombok.experimental.FieldDefaults;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
@@ -22,11 +21,11 @@ import java.util.Collection;
 
 @Component
 @RequiredArgsConstructor
-@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
+//@FieldDefaults( level = AccessLevel.PRIVATE)
 public class JwtFilter extends OncePerRequestFilter {
 
-    JwtUtil jwtUtil;
-    UserDetailServiceImpl userDetailsService;
+    private final JwtUtil jwtUtil;
+    private final UserDetailServiceImpl userDetailsService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
