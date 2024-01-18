@@ -72,6 +72,8 @@ public class SpringSecurity {
                     .requestMatchers("/api/products/get-all-products-by-category").hasAnyAuthority("ADMIN", "USER")
 
                     .anyRequest().authenticated();
+                    authorize.requestMatchers("/api/users/sign-up","/api/auth/sing-up", "/api/auth/sign-in","/products","/products/search").permitAll()
+                            .anyRequest().authenticated();
                 })
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();

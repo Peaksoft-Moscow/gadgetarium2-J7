@@ -32,4 +32,10 @@ public class ProductResponse {
     private double price;
     private String processor;
     private int weight;
+
+    private String name;
+    private Brand brand;
+
+    private int memorySize;
+
 }

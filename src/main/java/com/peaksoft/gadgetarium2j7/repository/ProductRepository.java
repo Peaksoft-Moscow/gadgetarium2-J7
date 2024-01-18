@@ -9,10 +9,13 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+
+
 import java.util.List;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product,Long> {
+
 
     @Query("select  p from  Product  p join  p.users u where p.id=:id")
     Product getAllByProductId (@Param("id") Long id );
@@ -27,3 +30,5 @@ public interface ProductRepository extends JpaRepository<Product,Long> {
 
 
 }
+
+

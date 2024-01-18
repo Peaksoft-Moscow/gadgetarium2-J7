@@ -1,8 +1,13 @@
 package com.peaksoft.gadgetarium2j7.model.entities;
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.FieldDefaults;
+
+import java.util.List;
+
 
 import java.util.List;
 
@@ -11,6 +16,7 @@ import java.util.List;
 @Setter
 @Getter
 @NoArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Brand {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,4 +26,6 @@ public class Brand {
     @OneToMany(cascade ={CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH},mappedBy = "brand")
     private List<Product> products;
 
+    @OneToMany(mappedBy = "brand", cascade = CascadeType.ALL)
+    private List<Product> products;
 }

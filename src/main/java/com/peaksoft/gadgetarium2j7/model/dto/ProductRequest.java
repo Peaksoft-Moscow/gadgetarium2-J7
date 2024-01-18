@@ -7,6 +7,8 @@ import jakarta.persistence.Enumerated;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+
+
 @Setter
 @Getter
 @Builder
@@ -24,6 +26,8 @@ public class ProductRequest {
     private String smartWatchSize;
     private String DisplayDiagonal;
     @Enumerated(value = EnumType.STRING)
+    private Gender gender;
+    @Enumerated(value = EnumType.STRING)
     private WaterResistance waterResistance;
     @Enumerated(EnumType.STRING)
     private WirelessInterface wirelessInterface;
@@ -32,4 +36,10 @@ public class ProductRequest {
     @Enumerated(EnumType.STRING)
     private OperationMemory operationMemory;
     private int simCard;
+
+
 }
+
+
+
+

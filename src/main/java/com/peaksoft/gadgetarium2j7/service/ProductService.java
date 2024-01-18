@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 import java.security.Principal;
 import java.util.*;
 
+
 @Service
 @RequiredArgsConstructor
 public class ProductService {
@@ -75,6 +76,7 @@ public class ProductService {
         product.setDescription(setDescription.getDescription());
         productRepository.save(product);
         return productMapper.mapToResponseSetDescription(product);
+
     }
 
     public void compare_product(Long id, Principal principal) {
@@ -152,3 +154,4 @@ public class ProductService {
         }
     }
 }
+
