@@ -1,4 +1,5 @@
 package com.peaksoft.gadgetarium2j7.model.dto;
+import com.peaksoft.gadgetarium2j7.model.entities.Brand;
 import com.peaksoft.gadgetarium2j7.model.entities.Category;
 import com.peaksoft.gadgetarium2j7.model.enums.Memory;
 import com.peaksoft.gadgetarium2j7.model.enums.OperationSystem;
@@ -32,8 +33,6 @@ public class ProductResponse {
     private double price;
     private String processor;
     private int weight;
-
-    private String name;
     private Brand brand;
 
     private int memorySize;

@@ -5,6 +5,7 @@ import com.peaksoft.gadgetarium2j7.service.UserDetailServiceImpl;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -27,7 +28,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class SpringSecurity {
-
+    @Autowired
     final JwtFilter jwtFilter;
 
     @Bean
@@ -55,7 +56,7 @@ public class SpringSecurity {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> {
                     authorize
-                     .requestMatchers("/api/users/sign-up", "/api/auth/sign-in").permitAll()
+//                     .requestMatchers("/api/users/sign-up", "/api/auth/sign-in").permitAll()
                      .requestMatchers("/swagger-ui/**",
                                     "/swagger-resources/*",
                                     "/v3/api-docs/**").permitAll()
@@ -72,7 +73,7 @@ public class SpringSecurity {
                     .requestMatchers("/api/products/get-all-products-by-category").hasAnyAuthority("ADMIN", "USER")
 
                     .anyRequest().authenticated();
-                    authorize.requestMatchers("/api/users/sign-up","/api/auth/sing-up", "/api/auth/sign-in","/products","/products/search").permitAll()
+                    authorize.requestMatchers("/api/users/sign-up", "/api/auth/sign-in").permitAll()
                             .anyRequest().authenticated();
                 })
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)

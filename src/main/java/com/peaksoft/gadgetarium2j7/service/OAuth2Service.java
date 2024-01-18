@@ -1,6 +1,5 @@
 package com.peaksoft.gadgetarium2j7.service;
 
-import com.peaksoft.gadgetarium2j7.model.entities.Role;
 import com.peaksoft.gadgetarium2j7.model.entities.User;
 import com.peaksoft.gadgetarium2j7.repository.UserRepository;
 import lombok.RequiredArgsConstructor;

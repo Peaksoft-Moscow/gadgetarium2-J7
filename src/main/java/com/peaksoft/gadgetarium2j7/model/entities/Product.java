@@ -27,10 +27,7 @@ public class Product {
     int weight;
     String color;
     String brandName;
-    @JsonIgnore
-    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinColumn(name = "brands_id")
-    Brand brand;
+
     String screenSize;
     @Enumerated(EnumType.STRING)
     Memory memory;
@@ -68,6 +65,10 @@ public class Product {
     @Enumerated(value= EnumType.STRING)
     OperationMemory operationMemory;
 
+    @JsonIgnore
+    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinColumn(name = "brand_id")
+    Brand brand;
     @JsonIgnore
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "category_id")

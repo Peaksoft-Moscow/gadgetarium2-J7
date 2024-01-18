@@ -53,9 +53,9 @@ public class User implements UserDetails {
     @JsonIgnore
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "newsLetter_id")
-    private NewsLetter newsLetter;
+    private Newsletter newsLetter;
 
-    @JsonIgnore
+
     @ManyToMany(cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH},fetch = FetchType.EAGER)
     @JoinTable(name = "compares_products",
             joinColumns = @JoinColumn(name="user_id"),
