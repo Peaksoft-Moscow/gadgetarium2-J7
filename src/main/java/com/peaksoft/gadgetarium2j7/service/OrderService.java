@@ -1,5 +1,6 @@
 package com.peaksoft.gadgetarium2j7.service;
 
+import com.peaksoft.gadgetarium2j7.exception.EntityNotFoundException;
 import com.peaksoft.gadgetarium2j7.mapper.OrderMapper;
 import com.peaksoft.gadgetarium2j7.model.dto.OrderRequest;
 import com.peaksoft.gadgetarium2j7.model.dto.OrderResponse;
@@ -24,11 +25,25 @@ public class OrderService {
             orderRepository.save(order);
             return orderMapper.mapToResponse(order);
         }
-        public List<OrderResponse> getAll() {
-            List<OrderResponse> orderResponses = new ArrayList<>();
-            for (Order order : orderRepository.findAll()){
-                orderResponses.add(orderMapper.mapToResponse(order));
-            }
-            return orderResponses;
+
+    public List<OrderResponse> getAll() {
+        List<OrderResponse> orderResponses = new ArrayList<>();
+        for (Order order : orderRepository.findAll()){
+            orderResponses.add(orderMapper.mapToResponse(order));
         }
+    return orderResponses;
+    }
+
+    public void delete(Long orderId){
+        orderRepository.findById(orderId)
+                .orElseThrow(() -> new EntityNotFoundException("Order with <id: "+orderId+"> not found"));
+        orderRepository.deleteById(orderId);
+    }
+
+    public OrderResponse getOrderById(Long orderId){
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new EntityNotFoundException("Order with <id: "+orderId+"> not found"));
+        return orderMapper.mapToResponse(order);
+    }
+
 }
