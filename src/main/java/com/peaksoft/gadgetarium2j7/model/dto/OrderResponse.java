@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Getter
@@ -21,4 +22,5 @@ public class OrderResponse {
     private List<Product> products;
     private List<User> users;
     private Basket basket;
+    private LocalDate localDate;
 }

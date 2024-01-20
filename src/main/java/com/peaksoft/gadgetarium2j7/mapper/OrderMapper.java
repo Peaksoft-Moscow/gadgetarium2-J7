@@ -5,6 +5,8 @@ import com.peaksoft.gadgetarium2j7.model.dto.OrderResponse;
 import com.peaksoft.gadgetarium2j7.model.entities.Order;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+
 @Component
 public class OrderMapper {
     public Order mapToEntity(OrderRequest request){
@@ -16,6 +18,7 @@ public class OrderMapper {
         order.setSum(request.getSum());
         order.setUsers(request.getUsers());
         order.setPayCard(request.getPayCard());
+        order.setLocalDate(LocalDate.now());
         order.setUserAddress(request.getUserAddress());
         return order;
     }
@@ -31,6 +34,7 @@ public class OrderMapper {
                 .basket(order.getBasket())
                 .userAddress(order.getUserAddress())
                 .products(order.getProducts())
+                .localDate(order.getLocalDate())
                 .build();
     }
 }
