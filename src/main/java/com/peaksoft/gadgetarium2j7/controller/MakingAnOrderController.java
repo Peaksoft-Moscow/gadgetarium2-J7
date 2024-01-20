@@ -1,15 +1,13 @@
 package com.peaksoft.gadgetarium2j7.controller;
 
-import com.peaksoft.gadgetarium2j7.model.dto.OrderRequest;
-import com.peaksoft.gadgetarium2j7.model.dto.OrderResponse;
+import com.peaksoft.gadgetarium2j7.model.dto.*;
 import com.peaksoft.gadgetarium2j7.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/making-an-order")
@@ -22,4 +20,21 @@ public class MakingAnOrderController {
         OrderResponse orderResponse = orderService.create(orderRequest);
         return new ResponseEntity<>(orderResponse, HttpStatus.CREATED);
     }
+
+    @DeleteMapping("/{id}")
+    public String delete(@PathVariable("id")Long id){
+        orderService.delete(id);
+        return "Delete order with id:" + id +" successfully delete";
+    }
+
+    @GetMapping()
+    public List<OrderResponse> getAllOrders(){
+        return orderService.getAll();
+    }
+
+    @GetMapping("/{id}")
+    public OrderResponse findById(@PathVariable Long id){
+        return orderService.getOrderById(id);
+    }
+
 }
