@@ -54,11 +54,6 @@ public class User implements UserDetails {
     @JoinColumn(name = "basket_id")
     private Basket basket;
 
-    @JsonIgnore
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "newsLetter_id")
-    private NewsLetter newsLetter;
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles;
