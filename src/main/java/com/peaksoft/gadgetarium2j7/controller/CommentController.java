@@ -3,10 +3,7 @@ package com.peaksoft.gadgetarium2j7.controller;
 import com.peaksoft.gadgetarium2j7.model.dto.CommentRequest;
 import com.peaksoft.gadgetarium2j7.service.CommentService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 
@@ -16,9 +13,9 @@ import java.security.Principal;
 public class CommentController {
     private final CommentService commentService;
 
-    @PostMapping("/add/comment")
-    public String add(@RequestBody CommentRequest commentRequest, Principal principal){
-        commentService.add(commentRequest,principal);
+    @PostMapping("/add/comment/{id}")
+    public String add(@RequestBody CommentRequest commentRequest, Principal principal,@PathVariable("id") Long idProduct){
+        commentService.add(commentRequest,principal,idProduct);
         return " Ваш отзыв успешно отпрален! ";
     }
 
