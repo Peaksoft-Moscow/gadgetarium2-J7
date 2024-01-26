@@ -29,6 +29,4 @@ public class Brand {
     @OneToMany(cascade ={CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH},mappedBy = "brand")
     private List<Product> products;
 
-    @OneToMany(mappedBy = "brand", cascade = CascadeType.ALL)
-    private List<Product> products;
 }

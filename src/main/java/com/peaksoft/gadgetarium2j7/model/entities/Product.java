@@ -78,5 +78,11 @@ public class Product {
     @JoinTable(name = "product_orders", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "order_id"))
     private List<Order> orderList = new ArrayList<>();
 
+    @JsonIgnore
+    @OneToOne(cascade = {CascadeType.DETACH,CascadeType.MERGE,
+            CascadeType.PERSIST,CascadeType.REFRESH})
+    @JoinColumn(name = "comment_id")
+    private Comment comment;
+
 
 }

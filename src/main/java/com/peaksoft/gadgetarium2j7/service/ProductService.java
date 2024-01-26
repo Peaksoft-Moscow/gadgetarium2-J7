@@ -3,12 +3,15 @@ import com.peaksoft.gadgetarium2j7.model.dto.*;
 import com.peaksoft.gadgetarium2j7.model.entities.Brand;
 import com.peaksoft.gadgetarium2j7.model.entities.Product;
 import com.peaksoft.gadgetarium2j7.mapper.ProductMapper;
+import com.peaksoft.gadgetarium2j7.model.entities.User;
 import com.peaksoft.gadgetarium2j7.repository.BrandRepository;
 import com.peaksoft.gadgetarium2j7.repository.ProductRepository;
+import com.peaksoft.gadgetarium2j7.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +22,7 @@ public class ProductService {
     private final ProductMapper productMapper;
     private final ProductRepository productRepository;
     private final BrandRepository brandRepository;
+    private final UserRepository userRepository;
 
     public ProductResponse create(ProductRequest productRequest) {
         Product product = productMapper.mapToEntity(productRequest);

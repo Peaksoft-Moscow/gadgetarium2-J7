@@ -54,6 +54,12 @@ public class User implements UserDetails {
     @JoinColumn(name = "basket_id")
     private Basket basket;
 
+    @JsonIgnore
+    @OneToOne(cascade = {CascadeType.DETACH,CascadeType.MERGE,
+            CascadeType.PERSIST,CascadeType.REFRESH})
+    @JoinColumn(name = "comment_id")
+    private Comment comment;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles;
@@ -82,5 +88,8 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public void setProducts(List<Product> product) {
     }
 }
