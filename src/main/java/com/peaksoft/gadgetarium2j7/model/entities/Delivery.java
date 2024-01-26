@@ -21,6 +21,7 @@ public class Delivery {
     private String name;
     @Enumerated(EnumType.STRING)
     private Status status;
+
     @JsonIgnore
     @OneToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, mappedBy = "delivery")
     private List<Order> orders;

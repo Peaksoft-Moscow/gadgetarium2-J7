@@ -19,10 +19,12 @@ public class Basket {
     private Long id;
     private double total;
     private double discount;
+
     @JsonIgnore
     @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(name = "users_baskets", joinColumns = @JoinColumn(name = "users_id"), inverseJoinColumns = @JoinColumn(name = "baskets_id"))
     private List<Product> products;
+
     @JsonIgnore
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "basket")
     private User user;

@@ -21,6 +21,7 @@ public class Category {
     private String name;
     @Enumerated(EnumType.STRING)
     private SubCategory subCategory;
+
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
     private List<Product> products;
