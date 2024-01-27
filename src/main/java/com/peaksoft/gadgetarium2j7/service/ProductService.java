@@ -1,4 +1,11 @@
 package com.peaksoft.gadgetarium2j7.service;
+import com.amazonaws.AmazonServiceException;
+import com.amazonaws.SdkClientException;
+import com.amazonaws.auth.InstanceProfileCredentialsProvider;
+import com.amazonaws.regions.Regions;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.peaksoft.gadgetarium2j7.model.dto.*;
 import com.peaksoft.gadgetarium2j7.model.entities.Brand;
 import com.peaksoft.gadgetarium2j7.model.entities.Product;
@@ -9,6 +16,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,15 +26,46 @@ public class ProductService {
     private final ProductMapper productMapper;
     private final ProductRepository productRepository;
     private final BrandRepository brandRepository;
-
+//    public void uploadPhoto(String photoKey, String photoFilePath) {
+//        String bucketName = "gadgetariumpremuim";
+//        try {
+//            AmazonS3 s3Client = AmazonS3ClientBuilder.standard()
+//                    .withRegion(Regions.DEFAULT_REGION)
+//                    .withCredentials(new InstanceProfileCredentialsProvider(false))
+//                    .build();
+//            PutObjectRequest request = new PutObjectRequest(bucketName, photoKey, new File(photoFilePath));
+//            s3Client.putObject(request);
+//            System.out.println("Фотография загружена на Amazon S3");
+//            String photoUrl = s3Client.getUrl(bucketName, photoKey).toExternalForm();
+//            System.out.println("Photo URL: " + photoUrl);
+//        } catch (AmazonServiceException e) {
+//            e.printStackTrace();
+//        } catch (SdkClientException e) {
+//            e.printStackTrace();
+//        }
+//    }
     public ProductResponse create(ProductRequest productRequest) {
         Product product = productMapper.mapToEntity(productRequest);
         Brand brand = brandRepository.findByName(productRequest.getBrandName()).orElseThrow(() -> new EntityNotFoundException("Brand not found"));
         product.setBrandName(brand.getName());
         product.setBrand(brand);
         productRepository.save(product);
+
+//        if (productRequest.getPhotoKey() != null && productRequest.getPhotoFilePath() != null) {
+//            uploadPhoto(productRequest.getPhotoKey(), productRequest.getPhotoFilePath());
+//        }
+
         return productMapper.mapToResponse(product);
     }
+
+//    public ProductResponse create(ProductRequest productRequest) {
+//        Product product = productMapper.mapToEntity(productRequest);
+//        Brand brand = brandRepository.findByName(productRequest.getBrandName()).orElseThrow(() -> new EntityNotFoundException("Brand not found"));
+//        product.setBrandName(brand.getName());
+//        product.setBrand(brand);
+//        productRepository.save(product);
+//        return productMapper.mapToResponse(product);
+//    }
 
     public List<ProductResponse> getAll() {
         List<ProductResponse> productResponses = new ArrayList<>();

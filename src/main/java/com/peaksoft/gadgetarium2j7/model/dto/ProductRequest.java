@@ -15,6 +15,8 @@ public class ProductRequest {
     private String brandName;
     private String guarantee;//гарантия
     private String name;
+    private String photoKey; // Имя ключа фотографии в хранилище
+    private String photoFilePath; // Путь к файлу фотографии
     private Memory memory;
     private String color;
     private String watchStraps;

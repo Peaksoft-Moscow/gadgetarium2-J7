@@ -19,7 +19,7 @@ public class ProductMapper {
         product.setSimCard(productRequest.getSimCard());
         product.setWirelessInterface(productRequest.getWirelessInterface());
         product.setWaterResistance(productRequest.getWaterResistance());
-        product.setImage(productRequest.getImage());
+        product.setPhotoURL(productRequest.getImage());
         product.setOperationMemory(productRequest.getOperationMemory());
         product.setCaseShape(productRequest.getCaseShape());
         return product;

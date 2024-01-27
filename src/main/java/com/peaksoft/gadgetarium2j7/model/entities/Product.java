@@ -51,7 +51,7 @@ public class Product {
     OperationSystem operatingSystem;
     @Enumerated(value=EnumType.STRING)
     Gender gender;
-    String image;
+    String photoURL;
     @Enumerated(value=EnumType.STRING)
     WirelessInterface wirelessInterface;
     @Enumerated(value= EnumType.STRING)
