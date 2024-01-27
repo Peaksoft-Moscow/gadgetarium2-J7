@@ -34,5 +34,4 @@ public class Comment {
             CascadeType.REFRESH,CascadeType.REMOVE},mappedBy ="comment" )
     private User user;
 
-
 }

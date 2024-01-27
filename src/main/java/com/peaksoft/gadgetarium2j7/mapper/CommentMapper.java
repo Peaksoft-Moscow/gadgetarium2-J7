@@ -15,7 +15,7 @@ public class CommentMapper {
         return comment;
     }
 
-    public CommentResponse mapToResponse(CommentRequest comment) {
+    public CommentResponse mapToResponse(Comment comment) {
         return CommentResponse.builder()
                 .id(comment.getId())
                 .rating(comment.getRating())
