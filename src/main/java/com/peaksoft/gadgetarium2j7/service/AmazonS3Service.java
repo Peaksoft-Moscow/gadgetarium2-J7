@@ -6,6 +6,8 @@ import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectInputStream;
 import com.amazonaws.util.IOUtils;
 import com.peaksoft.gadgetarium2j7.model.entities.Product;
+import com.peaksoft.gadgetarium2j7.repository.ProductRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,9 +20,11 @@ import java.io.IOException;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class AmazonS3Service {
     @Value("${amazon.s3.bucket-name}")
     private String bucketName;
+    private final ProductRepository productRepository;
 
     @Autowired
     private AmazonS3 s3client;
@@ -30,7 +34,8 @@ public class AmazonS3Service {
         String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
         s3client.putObject(new PutObjectRequest(bucketName, fileName, fileObj));
         fileObj.delete();
-        return "File uploaded:" + fileName;
+        return "https://" + bucketName + ".s3.amazonaws.com/" + fileName;
+//        return "File uploaded:" + fileName;
     }
 
     public byte[] downloadFile(String fileName) {
@@ -60,8 +65,11 @@ public class AmazonS3Service {
         return convertedFile;
     }
 
-    public void addPhotoToProduct(Product product, MultipartFile file) {
-        String fileName = uploadFile(file);
+    public void addPhotoToProduct(Product product, MultipartFile File) {
+        String fileName = uploadFile(File);
         product.setPhotoURL(fileName);
+        productRepository.save(product);
+
     }
+
 }
