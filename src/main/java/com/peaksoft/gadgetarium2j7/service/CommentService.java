@@ -60,6 +60,5 @@ public class CommentService {
                 .orElseThrow(() -> new RuntimeException(" Comment with id " + idProduct + " not found "));
         List<Comment> comments= commentRepository.getAllComment(product.getId());
         commentRepository.deleteAll(comments);
-        System.out.println(" mehtod delete comment ");
     }
 }
