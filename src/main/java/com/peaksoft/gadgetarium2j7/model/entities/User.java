@@ -56,8 +56,8 @@ public class User implements UserDetails {
 
 
     @JsonIgnore
-    @OneToOne(cascade = CascadeType.ALL,mappedBy ="user" )
-    private Comment comment;
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "user")
+    private List<Comment> comment;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

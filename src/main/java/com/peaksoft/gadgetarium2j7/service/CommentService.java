@@ -43,12 +43,7 @@ public class CommentService {
     }
 
     public void deleteById(Long id ){
-      Comment comment = commentRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException(" Comment with id " + id + " not found "));
-      comment.setUser(null);
-      comment.setProduct(null);
-      commentRepository.deleteById(comment.getId());
-        System.out.println(" mehtod delete comment ");
+        commentRepository.deleteById(id);
     }
 
     public CommentResponse update (Long id,CommentRequest request){
@@ -64,8 +59,7 @@ public class CommentService {
         Product product = productRepository.findById(idProduct)
                 .orElseThrow(() -> new RuntimeException(" Comment with id " + idProduct + " not found "));
         List<Comment> comments= commentRepository.getAllComment(product.getId());
-        comments.clear();
-        productRepository.save(product);
+        commentRepository.deleteAll(comments);
         System.out.println(" mehtod delete comment ");
     }
 }
