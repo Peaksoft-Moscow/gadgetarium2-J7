@@ -3,12 +3,15 @@ import com.peaksoft.gadgetarium2j7.model.dto.*;
 import com.peaksoft.gadgetarium2j7.model.entities.Brand;
 import com.peaksoft.gadgetarium2j7.model.entities.Product;
 import com.peaksoft.gadgetarium2j7.mapper.ProductMapper;
+import com.peaksoft.gadgetarium2j7.model.entities.User;
 import com.peaksoft.gadgetarium2j7.repository.BrandRepository;
 import com.peaksoft.gadgetarium2j7.repository.ProductRepository;
+import com.peaksoft.gadgetarium2j7.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +22,7 @@ public class ProductService {
     private final ProductMapper productMapper;
     private final ProductRepository productRepository;
     private final BrandRepository brandRepository;
+    private final UserRepository userRepository;
 
     public ProductResponse create(ProductRequest productRequest) {
         Product product = productMapper.mapToEntity(productRequest);
@@ -75,26 +79,6 @@ public class ProductService {
         List<Product> productList = new ArrayList<>();
             productList.add(productRepository.getAllByProductId(product.getId()));
         return getResponse(productList);
-    }
-
-    public List<ProductResponse> searchAndPaginationProduct(String category,
-                                                                double min_price,
-                                                                double max_price, String color,
-                                                                String operationMemory,
-                                                                String operationSystem, int page, int size, Principal principal) {
-        Pageable pageable = PageRequest.of(page - 1, size);
-        User user = userRepository.findByEmail(principal.getName())
-                .orElseThrow(() -> new EntityNotFoundException("User with id " + principal.getName() + " not found"));
-        List<Product> productList = user.getProducts();
-        category = category == null ? "" : category;
-        min_price = min_price < 0 ? 0 : min_price;
-        max_price = max_price == 0 ? Double.MAX_VALUE : max_price;
-        color = color == null ? "" : color;
-        operationMemory = operationMemory == null ? "" : operationMemory;
-        operationSystem = operationSystem == null ? "" : operationSystem;
-        List<Product> products = productRepository.getAllProductByFilter(category, min_price, max_price, color,
-                OperationMemory.valueOf(operationMemory), OperationSystem.valueOf(operationSystem), pageable);
-        return getResponse(products);
     }
 
     public List<ProductResponse> getProductByCategory(String category, boolean difference, Principal principal) {
