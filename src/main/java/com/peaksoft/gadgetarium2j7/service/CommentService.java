@@ -19,6 +19,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class CommentService {
+
     private final CommentMapper commentMapper;
     private final CommentRepository commentRepository;
     private final UserRepository userRepository;
@@ -41,12 +42,8 @@ public class CommentService {
                         .map(commentMapper::mapToResponse).toList();
     }
 
-    public void deleteById(Long id , Principal principal){
-        User user = userRepository.findByEmail(principal.getName())
-                .orElseThrow(() -> new RuntimeException(" User with id " + principal.getName() + " not found "));
-       Comment comment = commentRepository.findCommentById(id,user);
-        commentRepository.delete(comment);
-        user.setComment(comment);
+    public void deleteById(Long id ){
+      commentRepository.deleteById(id);
     }
 
     public CommentResponse update (Long id,CommentRequest request){
@@ -54,7 +51,7 @@ public class CommentService {
                 .orElseThrow(() -> new RuntimeException(" User with id " + id + " not found "));
         oldComment.setRating(request.getRating());
         oldComment.setComment(request.getComment());
-        oldComment.setImg(request.getImg());
+        oldComment.setImg(String.valueOf(request.getImg()));
         commentRepository.save(oldComment);
         return commentMapper.mapToResponse(oldComment);
     }

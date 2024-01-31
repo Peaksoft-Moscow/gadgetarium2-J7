@@ -5,6 +5,7 @@ import com.peaksoft.gadgetarium2j7.model.dto.RegistrationRequest;
 import com.peaksoft.gadgetarium2j7.model.dto.RegistrationResponse;
 import com.peaksoft.gadgetarium2j7.model.entities.Role;
 import com.peaksoft.gadgetarium2j7.model.entities.User;
+import com.peaksoft.gadgetarium2j7.repository.RoleRepository;
 import com.peaksoft.gadgetarium2j7.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +21,7 @@ import java.util.List;
 public class UserService {
     private final UserMapper userMapper;
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
 
     public RegistrationResponse registration(RegistrationRequest request) {
         User user = userMapper.mapToEntity(request);
@@ -74,8 +76,21 @@ public class UserService {
         }
 
         List<Role> roles = new ArrayList<>();
-        Role role = new Role("USER");
-        roles.add(role);
+//        Role role = new Role("USER");
+//        roles.add(role);
+        if (userRepository.findAll().isEmpty()) {
+            Role role = roleRepository.findByName("ADMIN");
+            if (role == null) {
+                role = new Role("ADMIN");
+            }
+            roles.add(role);
+        } else {
+            Role role = roleRepository.findByName("USER");
+            if (role == null) {
+                role = new Role("USER");
+            }
+            roles.add(role);
+        }
         user.setRoles(roles);
         userRepository.save(user);
         return userMapper.registration(user);

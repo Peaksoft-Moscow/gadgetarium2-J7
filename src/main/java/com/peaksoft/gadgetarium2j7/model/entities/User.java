@@ -54,10 +54,11 @@ public class User implements UserDetails {
     @JoinColumn(name = "basket_id")
     private Basket basket;
 
+
     @JsonIgnore
-    @OneToOne(cascade = {CascadeType.DETACH,CascadeType.MERGE,
-            CascadeType.PERSIST,CascadeType.REFRESH})
-    @JoinColumn(name = "comment_id")
+    @OneToOne(cascade = {CascadeType.DETACH,
+        CascadeType.MERGE,CascadeType.PERSIST,
+        CascadeType.REFRESH},mappedBy ="user" )
     private Comment comment;
 
     @Override

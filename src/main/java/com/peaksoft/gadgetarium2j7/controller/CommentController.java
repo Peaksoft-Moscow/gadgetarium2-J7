@@ -4,7 +4,6 @@ import com.peaksoft.gadgetarium2j7.model.dto.CommentRequest;
 import com.peaksoft.gadgetarium2j7.model.dto.CommentResponse;
 import com.peaksoft.gadgetarium2j7.service.CommentService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +14,7 @@ import java.util.List;
 @RequestMapping("/api/comments")
 @RequiredArgsConstructor
 public class CommentController {
+
     private final CommentService commentService;
 
     @PostMapping("/add/comment/{id}")
@@ -23,23 +23,25 @@ public class CommentController {
         commentService.add(commentRequest,principal,idProduct);
         return " Ваш отзыв успешно отправлен! ";
     }
+
     @GetMapping("/get-all/comment")
     @Operation(description = " This is method get all comment. ")
     public List<CommentResponse> getAll (){
         return commentService.getAll();
     }
+
     @DeleteMapping("/delete-comment/{id}")
     @Operation(description = " This is method delete by id. ")
-    public String delete(@PathVariable("id") Long id,Principal principal){
-        commentService.deleteById(id,principal);
+    public String delete(@PathVariable("id") Long id ){
+        commentService.deleteById(id);
         return " Success deleted! ";
     }
+
     @PutMapping("/update/comment/{id}")
     @Operation(description = " This is method update comment. ")
     public  CommentResponse update (@PathVariable("id") Long id,
                                     @RequestBody CommentRequest commentRequest ){
        return commentService.update(id,commentRequest);
     }
-
 
 }

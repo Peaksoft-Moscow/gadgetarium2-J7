@@ -11,11 +11,11 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/products")
+@RequestMapping("/api/products")
 public class ProductController {
 
     private final ProductService productService;
-    @PostMapping()
+    @PostMapping("/add-product")
     public ResponseEntity<ProductResponse> add(@RequestBody ProductRequest productRequest){
         ProductResponse response = productService.create(productRequest);
         return new ResponseEntity<>(response, HttpStatus.CREATED);

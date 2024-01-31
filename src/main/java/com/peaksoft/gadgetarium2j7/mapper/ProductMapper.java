@@ -9,19 +9,23 @@ public class ProductMapper {
     public Product mapToEntity(ProductRequest productRequest){
         Product product = new Product();
         product.setName(productRequest.getName());
-        product.setCategory(productRequest.getCategory());
-        product.setSubCategory(productRequest.getCategory().getSubCategory());
-        product.setGuarantee(productRequest.getGuarantee());
+        product.setCategoryName(productRequest.getCategoryName());
+        product.setBrandName(productRequest.getBrandName());
         product.setMemory(productRequest.getMemory());
-        product.setColor(productRequest.getColor());
+
+        product.setGuarantee(productRequest.getGuarantee());
+        product.setWatchStraps(productRequest.getWatchStraps());
+        product.setBodyMaterial(productRequest.getBodyMaterial());
+        product.setSmartWatchSize(productRequest.getSmartWatchSize());
+        product.setDisplayDiagonal(productRequest.getDisplayDiagonal());
         product.setCreatDate(LocalDate.now());
-        product.setGender(productRequest.getGender());
         product.setSimCard(productRequest.getSimCard());
         product.setWirelessInterface(productRequest.getWirelessInterface());
         product.setWaterResistance(productRequest.getWaterResistance());
-        product.setImage(productRequest.getImage());
+
         product.setOperationMemory(productRequest.getOperationMemory());
         product.setCaseShape(productRequest.getCaseShape());
+
         return product;
     }
 

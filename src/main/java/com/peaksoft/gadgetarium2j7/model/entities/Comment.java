@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.web.multipart.MultipartFile;
 
 
 @Entity
@@ -20,18 +19,18 @@ public class Comment {
     private Long id;
     private int rating;
     private String comment;
-    private MultipartFile img;
+    private String img;
 
     @JsonIgnore
-    @OneToOne(cascade = {CascadeType.DETACH,
-            CascadeType.MERGE,CascadeType.PERSIST,
-            CascadeType.REFRESH,CascadeType.REMOVE},mappedBy ="comment" )
+    @OneToOne(cascade = {CascadeType.DETACH,CascadeType.MERGE,
+        CascadeType.PERSIST,CascadeType.REFRESH,CascadeType.REMOVE})
+    @JoinColumn(name = "product_id")
     private Product product;
 
     @JsonIgnore
-    @OneToOne(cascade = {CascadeType.DETACH,
-            CascadeType.MERGE,CascadeType.PERSIST,
-            CascadeType.REFRESH,CascadeType.REMOVE},mappedBy ="comment" )
+    @OneToOne(cascade = {CascadeType.DETACH,CascadeType.MERGE,
+            CascadeType.PERSIST,CascadeType.REFRESH,CascadeType.REMOVE})
+    @JoinColumn(name = "user_id")
     private User user;
 
 }

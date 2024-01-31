@@ -15,5 +15,5 @@ public class CommentRequest {
     @Max(value=5)
     private int rating;
     private String comment;
-    private MultipartFile img;
+    private String img;
 }
