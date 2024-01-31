@@ -32,7 +32,7 @@ public class CommentController {
 
     @DeleteMapping("/delete-comment/{id}")
     @Operation(description = " This is method delete by id. ")
-    public String delete(@PathVariable("id") Long id ){
+    public String deleteById(@PathVariable("id") Long id ){
         commentService.deleteById(id);
         return " Success deleted! ";
     }
@@ -43,5 +43,6 @@ public class CommentController {
                                     @RequestBody CommentRequest commentRequest ){
        return commentService.update(id,commentRequest);
     }
+
 
 }
