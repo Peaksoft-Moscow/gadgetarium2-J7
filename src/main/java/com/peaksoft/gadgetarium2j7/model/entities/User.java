@@ -59,6 +59,12 @@ public class User implements UserDetails {
     @JoinColumn(name = "newsLetter_id")
     private NewsLetter newsLetter;
 
+    @ManyToMany(cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH},fetch = FetchType.EAGER)
+    @JoinTable(name = "compares_products",
+            joinColumns = @JoinColumn(name="user_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id"))
+    private List<Product>products;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles;
