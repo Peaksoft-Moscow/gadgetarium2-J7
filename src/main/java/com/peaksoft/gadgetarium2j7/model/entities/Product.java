@@ -79,11 +79,6 @@ public class Product {
     private List<Order> orderList = new ArrayList<>();
 
     @JsonIgnore
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "category_id")
-    Category category;
-
-    @JsonIgnore
     @ManyToMany(mappedBy = "products", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     List<User>users;
 }
