@@ -13,7 +13,8 @@ import lombok.Setter;
 @Getter
 @Builder
 public class ProductRequest {
-    private Category category;
+//    private Category category;
+    private String
     private String brandName;
     private String guarantee;//гарантия
     private String name;

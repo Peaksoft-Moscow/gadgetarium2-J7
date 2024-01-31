@@ -43,5 +43,4 @@ public class BrandController {
         return brandService.update(id, brandRequest);
     }
 
-
 }
