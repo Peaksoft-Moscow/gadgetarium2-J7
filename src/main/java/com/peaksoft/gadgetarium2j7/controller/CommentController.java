@@ -43,10 +43,11 @@ public class CommentController {
                                     @RequestBody CommentRequest commentRequest ){
        return commentService.update(id,commentRequest);
     }
+
     @DeleteMapping("/delete-All/{id}")
-    @Operation(description = " This is method delete by id. ")
-    public String deleteAll(@PathVariable("id") Long idProduct,Principal principal ){
-        commentService.deleteAll(idProduct,principal);
+    @Operation(description = " This is method delete all comment. ")
+    public String deleteAll(@PathVariable("id") Long idProduct){
+        commentService.deleteAll(idProduct);
         return " Success deleted All! ";
     }
 

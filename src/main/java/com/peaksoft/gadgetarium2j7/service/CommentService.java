@@ -60,12 +60,12 @@ public class CommentService {
         commentRepository.save(oldComment);
         return commentMapper.mapToResponse(oldComment);
     }
-    public void deleteAll(Long idProduct,Principal principal ){
-        Comment comment = commentRepository.findById(idProduct)
+    public void deleteAll(Long idProduct ){
+        Product product = productRepository.findById(idProduct)
                 .orElseThrow(() -> new RuntimeException(" Comment with id " + idProduct + " not found "));
-        comment.setUser(null);
-        comment.setProduct(null);
-        commentRepository.deleteById(comment.getId());
+        List<Comment> comments= commentRepository.getAllComment(product.getId());
+        comments.clear();
+        productRepository.save(product);
         System.out.println(" mehtod delete comment ");
     }
 }
