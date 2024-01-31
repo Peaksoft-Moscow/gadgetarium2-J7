@@ -56,9 +56,7 @@ public class User implements UserDetails {
 
 
     @JsonIgnore
-    @OneToOne(cascade = {CascadeType.DETACH,
-        CascadeType.MERGE,CascadeType.PERSIST,
-        CascadeType.REFRESH},mappedBy ="user" )
+    @OneToOne(cascade = CascadeType.ALL,mappedBy ="user" )
     private Comment comment;
 
     @Override

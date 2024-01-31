@@ -62,7 +62,8 @@ public class SpringSecurity {
 
                             .requestMatchers("/api/comments/add/comment/{id}").hasAnyAuthority("ADMIN","USER")
                             .requestMatchers("/api/comments/get-all/comment").hasAnyAuthority("ADMIN","USER")
-                            .requestMatchers("/api/comments/delete-comment/{id}").hasAnyAuthority("ADMIN","USER")
+                            .requestMatchers("/api/comments/delete-comment/{id}").hasAuthority("ADMIN")
+                            .requestMatchers("/api/comments/delete-All/{id}").hasAuthority("ADMIN")
                             .requestMatchers("/api/comments/update/comment/{id}").hasAnyAuthority("ADMIN","USER")
                             .anyRequest().authenticated();
                 })

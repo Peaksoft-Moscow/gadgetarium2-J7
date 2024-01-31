@@ -83,9 +83,7 @@ public class Product {
     private List<Order> orderList = new ArrayList<>();
 
     @JsonIgnore
-    @OneToOne(cascade = {CascadeType.DETACH,
-            CascadeType.MERGE,CascadeType.PERSIST,
-            CascadeType.REFRESH},mappedBy ="product" )
+    @OneToOne(cascade = CascadeType.ALL,mappedBy ="product" )
     private Comment comment;
 
 }
