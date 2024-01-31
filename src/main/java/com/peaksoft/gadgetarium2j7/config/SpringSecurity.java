@@ -54,7 +54,17 @@ public class SpringSecurity {
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> {
-                    authorize.requestMatchers("/api/users/sign-up","/api/auth/sing-up", "/api/auth/sign-in","/products","/products/search").permitAll()
+                    authorize
+                            .requestMatchers("/api/users/sign-up","/api/auth/sing-up", "/api/auth/sign-in","/products","/products/search").permitAll()
+
+                            .requestMatchers("/api/products/add-product").hasAnyAuthority("ADMIN","USER")
+
+
+                            .requestMatchers("/api/comments/add/comment/{id}").hasAnyAuthority("ADMIN","USER")
+                            .requestMatchers("/api/comments/get-all/comment").hasAnyAuthority("ADMIN","USER")
+                            .requestMatchers("/api/comments/delete-comment/{id}").hasAuthority("ADMIN")
+                            .requestMatchers("/api/comments/delete-All/{id}").hasAuthority("ADMIN")
+                            .requestMatchers("/api/comments/update/comment/{id}").hasAnyAuthority("ADMIN","USER")
                             .anyRequest().authenticated();
                 })
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)

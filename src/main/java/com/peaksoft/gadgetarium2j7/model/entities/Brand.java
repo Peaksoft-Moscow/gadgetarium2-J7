@@ -4,6 +4,12 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
+
+
+import java.util.List;
+
 import lombok.experimental.FieldDefaults;
 
 import java.util.List;
@@ -20,6 +26,8 @@ public class Brand {
     Long id;
     String name;
     String image;
-    @OneToMany(mappedBy = "brand", cascade = CascadeType.ALL)
+
+    @OneToMany(cascade ={CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH},mappedBy = "brand")
     private List<Product> products;
+
 }

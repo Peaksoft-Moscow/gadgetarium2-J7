@@ -12,6 +12,7 @@ import java.time.LocalDate;
 public class ProductResponse {
     private Long id;
     private String brandName;
+    private String categoryName;
     private String article;
     private String rating;
     private int inStock;
@@ -26,10 +27,8 @@ public class ProductResponse {
     private double price;
     private String processor;
     private int weight;
-
     private String name;
     private Brand brand;
-
     private int memorySize;
 
 }

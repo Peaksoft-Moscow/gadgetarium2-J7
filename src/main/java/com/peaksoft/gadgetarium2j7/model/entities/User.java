@@ -54,10 +54,10 @@ public class User implements UserDetails {
     @JoinColumn(name = "basket_id")
     private Basket basket;
 
+
     @JsonIgnore
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "newsLetter_id")
-    private NewsLetter newsLetter;
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "user")
+    private List<Comment> comment;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -88,4 +88,5 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 }

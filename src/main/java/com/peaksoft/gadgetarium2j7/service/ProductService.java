@@ -1,10 +1,13 @@
 package com.peaksoft.gadgetarium2j7.service;
 import com.peaksoft.gadgetarium2j7.model.dto.*;
 import com.peaksoft.gadgetarium2j7.model.entities.Brand;
+import com.peaksoft.gadgetarium2j7.model.entities.Category;
 import com.peaksoft.gadgetarium2j7.model.entities.Product;
 import com.peaksoft.gadgetarium2j7.mapper.ProductMapper;
 import com.peaksoft.gadgetarium2j7.repository.BrandRepository;
+import com.peaksoft.gadgetarium2j7.repository.CategoryRepository;
 import com.peaksoft.gadgetarium2j7.repository.ProductRepository;
+import com.peaksoft.gadgetarium2j7.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,12 +22,19 @@ public class ProductService {
     private final ProductMapper productMapper;
     private final ProductRepository productRepository;
     private final BrandRepository brandRepository;
+    private final CategoryRepository categoryRepository;
+    private final UserRepository userRepository;
 
     public ProductResponse create(ProductRequest productRequest) {
         Product product = productMapper.mapToEntity(productRequest);
-        Brand brand = brandRepository.findByName(productRequest.getBrandName()).orElseThrow(() -> new EntityNotFoundException("Brand not found"));
+        Brand brand = brandRepository.findByName(productRequest.getBrandName())
+                .orElseThrow(() -> new EntityNotFoundException("Brand not found "));
         product.setBrandName(brand.getName());
         product.setBrand(brand);
+        Category category = categoryRepository.findByNameCategory(productRequest.getCategoryName())
+                        .orElseThrow(() -> new EntityNotFoundException(" Category not found "));
+        product.setCategoryName(category.getName());
+        product.setCategory(category);
         productRepository.save(product);
         return productMapper.mapToResponse(product);
     }
@@ -65,5 +75,6 @@ public class ProductService {
         return productMapper.mapToResponseSetDescription(product);
 
     }
+    
 }
 
