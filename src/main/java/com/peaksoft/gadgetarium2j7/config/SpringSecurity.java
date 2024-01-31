@@ -56,8 +56,6 @@ public class SpringSecurity {
                 .authorizeHttpRequests(authorize -> {
                     authorize.requestMatchers("/api/users/sign-up","/api/auth/sing-up", "/api/auth/sign-in","/products",
                                     "/products/search","/products/discount","/products/sorted","/products/resetFilters").permitAll()
-                    authorize.requestMatchers("/api/users/sign-up","/api/auth/sing-up", "/api/auth/sign-in","/products",
-                                    "/products/search","/products/search1").permitAll()
                             .anyRequest().authenticated();
                 })
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
