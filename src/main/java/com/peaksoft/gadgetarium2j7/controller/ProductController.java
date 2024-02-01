@@ -67,7 +67,7 @@ public class ProductController {
     @GetMapping("/get-all-products-by-category")
     @Operation(description = "Получение продукта по категориям из таблицы сравнение( compare_product ). ")
     public List<ProductResponse> getAllProductByCategory(
-            @RequestParam("category") String category,
+            @RequestParam(value = "category",required = false) String category,
             @RequestParam(value = "difference",required = false)boolean difference,
             Principal principal){
         return productService.getProductByCategory(category, difference,principal);

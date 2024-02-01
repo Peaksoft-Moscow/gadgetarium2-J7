@@ -92,25 +92,23 @@ public class ProductService {
 
     public List<ProductResponse> getProductByCategory(String category, boolean difference, Principal principal) {
         List<Product> products = new ArrayList<>();
-        List<Product> productList = new ArrayList<>();
         User user = userRepository.findByEmail(principal.getName())
                 .orElseThrow(() -> new EntityNotFoundException(" User with id " + principal.getName() + " not found "));
         List<Product> getProduct = productRepository.getProductByCategory(user.getId(), category);
         if (difference) {
             for (int i = 1; i < getProduct.size(); i++) {
-                if (!getProduct.get(i).getBrand().equals(getProduct.get(i - 1).getBrand()) ||
-                        !getProduct.get(i).getScreen().equals(getProduct.get(i - 1).getScreen()) ||
+                    if (!getProduct.get(i).getBrand().equals(getProduct.get(i - 1).getBrand()) ||
+                        !getProduct.get(i).getScreen().equals(getProduct.get(i - 1).getScreen())  ||
                         !getProduct.get(i).getColor().equals(getProduct.get(i - 1).getColor()) ||
                         !getProduct.get(i).getOperatingSystem().equals(getProduct.get(i - 1).getOperatingSystem()) ||
                         !getProduct.get(i).getMemory().equals(getProduct.get(i - 1).getMemory())  ||
-                        !(getProduct.get(i).getWeight() == getProduct.get(i - 1).getWeight()) ||
+                        !(getProduct.get(i).getWeight() == getProduct.get(i - 1).getWeight())  ||
                         !(getProduct.get(i).getSimCard()==(getProduct.get(i - 1).getSimCard()))) {
-                    products.add(getProduct.get(i));
-                }else {
-                  productList.add(getProduct.get(i));
-                }
+                        System.out.println(" in if ");
+                        products.add(getProduct.get(i));
+                    }
             }
-            return getResponse(productList);
+            return getResponse(getProduct) ;
         }
         return getResponse(getProduct);
     }
