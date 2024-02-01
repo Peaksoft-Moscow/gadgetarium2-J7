@@ -13,11 +13,11 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/products")
+@RequestMapping("/api/products")
 public class ProductController {
 
     private final ProductService productService;
-    @PostMapping()
+    @PostMapping("/add-product")
     public ResponseEntity<ProductResponse> add(@RequestBody ProductRequest productRequest){
         ProductResponse response = productService.create(productRequest);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
@@ -56,12 +56,14 @@ public class ProductController {
         productService.compare_product(id,principal);
         return " Sucsess add! ";
     }
+
     @DeleteMapping("/delete")
     @Operation(description = "Очистить все продукты из таблицы сравнение( compare_product ). ")
     public String deleteProductInCompare(Principal principal){
         productService.deleteProductInCompare(principal);
         return " Successful delete! ";
     }
+
     @GetMapping("/get-all-products-by-category")
     @Operation(description = "Получение продукта по категориям из таблицы сравнение( compare_product ). ")
     public List<ProductResponse> getAllProductByCategory(

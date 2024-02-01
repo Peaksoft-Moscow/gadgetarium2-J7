@@ -1,10 +1,12 @@
 package com.peaksoft.gadgetarium2j7.service;
 import com.peaksoft.gadgetarium2j7.model.dto.*;
 import com.peaksoft.gadgetarium2j7.model.entities.Brand;
+import com.peaksoft.gadgetarium2j7.model.entities.Category;
 import com.peaksoft.gadgetarium2j7.model.entities.Product;
 import com.peaksoft.gadgetarium2j7.mapper.ProductMapper;
 import com.peaksoft.gadgetarium2j7.model.entities.User;
 import com.peaksoft.gadgetarium2j7.repository.BrandRepository;
+import com.peaksoft.gadgetarium2j7.repository.CategoryRepository;
 import com.peaksoft.gadgetarium2j7.repository.ProductRepository;
 import com.peaksoft.gadgetarium2j7.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -23,12 +25,18 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final BrandRepository brandRepository;
     private final UserRepository userRepository;
+    private final CategoryRepository categoryRepository;
 
     public ProductResponse create(ProductRequest productRequest) {
         Product product = productMapper.mapToEntity(productRequest);
-        Brand brand = brandRepository.findByName(productRequest.getBrandName()).orElseThrow(() -> new EntityNotFoundException("Brand not found"));
+        Brand brand = brandRepository.findByName(productRequest.getBrandName())
+                .orElseThrow(() -> new EntityNotFoundException(" Brand not found "));
         product.setBrandName(brand.getName());
         product.setBrand(brand);
+        Category category = categoryRepository.findByNameCategory(productRequest.getCategoryName())
+                .orElseThrow(() -> new EntityNotFoundException(" Category not found "));
+        product.setCategoryName(category.getName());
+        product.setCategory(category);
         productRepository.save(product);
         return productMapper.mapToResponse(product);
     }
@@ -70,21 +78,23 @@ public class ProductService {
 
     }
 
-    public List<ProductResponse> compare_product(Long id, Principal principal) {
+    public void compare_product(Long id, Principal principal) {
         Product product = productRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Product with id " + id + " not found"));
+                .orElseThrow(() -> new EntityNotFoundException(" Product with id " + id + " not found "));
+       List<Product> products =productRepository.getAllProduct();
+       products.add(product);
         User user = userRepository.findByEmail(principal.getName())
-                .orElseThrow(() -> new EntityNotFoundException("User with id " + principal.getName() + " not found"));
-        user.setProducts((List<Product>) product);
-        List<Product> productList = new ArrayList<>();
-            productList.add(productRepository.getAllByProductId(product.getId()));
-        return getResponse(productList);
+                .orElseThrow(() -> new EntityNotFoundException(" User with id " + principal.getName() + " not found "));
+        user.setProducts(products);
+        userRepository.save(user);
+        productRepository.saveAll(products);
     }
 
     public List<ProductResponse> getProductByCategory(String category, boolean difference, Principal principal) {
         List<Product> products = new ArrayList<>();
+        List<Product> productList = new ArrayList<>();
         User user = userRepository.findByEmail(principal.getName())
-                .orElseThrow(() -> new EntityNotFoundException("User with id " + principal.getName() + " not found"));
+                .orElseThrow(() -> new EntityNotFoundException(" User with id " + principal.getName() + " not found "));
         List<Product> getProduct = productRepository.getProductByCategory(user.getId(), category);
         if (difference) {
             for (int i = 1; i < getProduct.size(); i++) {
@@ -96,9 +106,11 @@ public class ProductService {
                         !(getProduct.get(i).getWeight() == getProduct.get(i - 1).getWeight()) ||
                         !(getProduct.get(i).getSimCard()==(getProduct.get(i - 1).getSimCard()))) {
                     products.add(getProduct.get(i));
+                }else {
+                  productList.add(getProduct.get(i));
                 }
             }
-            return getResponse(products);
+            return getResponse(productList);
         }
         return getResponse(getProduct);
     }
@@ -119,10 +131,10 @@ public class ProductService {
         List<Product> products = new ArrayList<>();
         for (Product product : productList) {
             products.add(productRepository.getAllByProductId(product.getId()));
-            for (Product product1 : products) {
-                productRepository.deleteById(product1.getId());
-            }
         }
+        products.clear();
+        user.setProducts(products);
+        userRepository.save(user);
     }
 }
 

@@ -13,11 +13,13 @@ import lombok.Setter;
 @Getter
 @Builder
 public class ProductRequest {
+
 //    private Category category;
-    private String
+    private String categoryName;
     private String brandName;
     private String guarantee;//гарантия
     private String name;
+    @Enumerated(value = EnumType.STRING)
     private Memory memory;
     private String color;
     private String watchStraps;
@@ -25,12 +27,13 @@ public class ProductRequest {
     private String smartWatchSize;
     private String DisplayDiagonal;
     @Enumerated(value = EnumType.STRING)
-    private Gender gender;
-    @Enumerated(value = EnumType.STRING)
     private WaterResistance waterResistance;
+    @Enumerated(value = EnumType.STRING)
     private WirelessInterface wirelessInterface;
+    @Enumerated(value = EnumType.STRING)
     private CaseShape caseShape;
     private String image;
+    @Enumerated(value = EnumType.STRING)
     private OperationMemory operationMemory;
     private int simCard;
 

@@ -31,14 +31,13 @@ public class User implements UserDetails {
     private int age;
     private String telNumber;
     private LocalDate createDate;
-
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
     @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, fetch = FetchType.EAGER)
     @JoinTable(name = "users_and_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<Role> roles;
-    @Enumerated(EnumType.STRING)
-    private Gender gender;
 
     @JsonIgnore
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
