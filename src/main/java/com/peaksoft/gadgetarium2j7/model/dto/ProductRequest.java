@@ -14,7 +14,7 @@ import lombok.Setter;
 @Builder
 public class ProductRequest {
 
-//    private Category category;
+    private Category category;
     private String categoryName;
     private String brandName;
     private String guarantee;//гарантия

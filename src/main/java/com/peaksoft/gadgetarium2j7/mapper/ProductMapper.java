@@ -9,8 +9,8 @@ public class ProductMapper {
     public Product mapToEntity(ProductRequest productRequest){
         Product product = new Product();
         product.setName(productRequest.getName());
-//        product.setCategory(productRequest.getCategory());
-//        product.setSubCategory(productRequest.getCategory().getSubCategory());
+        product.setCategory(productRequest.getCategory());
+        product.setSubCategory(productRequest.getCategory().getSubCategory());
         product.setGuarantee(productRequest.getGuarantee());
         product.setMemory(productRequest.getMemory());
         product.setColor(productRequest.getColor());

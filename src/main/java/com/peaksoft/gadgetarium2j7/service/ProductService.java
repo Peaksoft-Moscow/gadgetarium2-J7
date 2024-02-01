@@ -104,7 +104,6 @@ public class ProductService {
                         !getProduct.get(i).getMemory().equals(getProduct.get(i - 1).getMemory())  ||
                         !(getProduct.get(i).getWeight() == getProduct.get(i - 1).getWeight())  ||
                         !(getProduct.get(i).getSimCard()==(getProduct.get(i - 1).getSimCard()))) {
-                        System.out.println(" in if ");
                         products.add(getProduct.get(i));
                     }
             }
