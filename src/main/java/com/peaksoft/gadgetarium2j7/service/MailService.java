@@ -12,6 +12,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.util.Random;
 @Service
 @RequiredArgsConstructor
@@ -35,22 +36,23 @@ public class MailService {
     }
 }
 
-    public String resetPassword(String email, int pinCode, String newPassword, String confirmPassword)
+    public String resetPassword(Principal principal ,String email, int pinCode, String newPassword, String confirmPassword)
             throws EntityNotFoundException, PasswordsDoNotMatchException {
         if (!newPassword.equals(confirmPassword)) {
             throw new PasswordsDoNotMatchException("Пароли не совпадают");
         } else {
             User user = userRepository.findByEmail(email)
                     .orElseThrow(() -> new EntityNotFoundException("Пользователь не найден"));
-            if (pinCode == user.getPinCode()) {
-                user.setPassword(passwordEncoder.encode(newPassword));
-                userRepository.save(user);
-                return "Сброс пароля прошел успешно";
+            if (principal.getName().equals(email)) {
+                if (pinCode == user.getPinCode()) {
+                    user.setPassword(passwordEncoder.encode(newPassword));
+                    userRepository.save(user);
+                    return "Сброс пароля прошел успешно";
+                }
             }
+            return "Неверный PIN-код";
         }
-        return "Неверный PIN-код";
     }
-
     private int generatePinCode() {
         Random random = new Random();
         return random.nextInt(100000, 1000000);

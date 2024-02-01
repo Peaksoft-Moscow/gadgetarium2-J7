@@ -4,7 +4,10 @@ import com.peaksoft.gadgetarium2j7.exception.EntityNotFoundException;
 import com.peaksoft.gadgetarium2j7.exception.PasswordsDoNotMatchException;
 import com.peaksoft.gadgetarium2j7.service.MailService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
 
 @RestController
 @RequestMapping("/api/newsletter")
@@ -18,9 +21,9 @@ public class MailController {
     }
 
     @PostMapping("/resetPassword")
-    public String resetPassword(@RequestParam String email, @RequestParam int pinCode,
+    public String resetPassword(Principal principal, @RequestParam String email, @RequestParam int pinCode,
                                 @RequestParam String newPassword, @RequestParam String confirmPassword)
             throws EntityNotFoundException, PasswordsDoNotMatchException {
-        return mailService.resetPassword(email, pinCode, newPassword, confirmPassword);
+        return mailService.resetPassword(principal,email, pinCode, newPassword, confirmPassword);
     }
 }
