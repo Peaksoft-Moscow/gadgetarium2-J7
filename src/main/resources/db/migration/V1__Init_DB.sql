@@ -2,8 +2,7 @@
      CREATE TABLE baskets(
       discount float(53) not null,
       total float(53) not null,
-      id bigserial not null,
-      primary key (id)
+      id bigserial primary key
       );
 
      CREATE TABLE brands (
