@@ -13,7 +13,7 @@ public class ProductResponse {
     private Long id;
     private String brandName;
     private String article;
-    private String rating;
+    private double rating;
     private int inStock;
     private int amount;
     private  String screen;
