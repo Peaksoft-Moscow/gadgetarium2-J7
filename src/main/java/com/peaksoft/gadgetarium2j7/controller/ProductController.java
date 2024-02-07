@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/products")
@@ -30,19 +31,21 @@ public class ProductController {
         return productService.setPriceAndQuantity(id, setPriceAndQuantity);
     }
 
-   @DeleteMapping("/{id}")
+    @DeleteMapping("/{id}")
     public String delete(@PathVariable("id")Long id){
         productService.delete(id);
         return "Delete product with id:" + id +" successfully delete";
-   }
+    }
 
-   @GetMapping()
+    @GetMapping()
     public List<ProductResponse> getAllProduct(){
         return productService.getAll();
-   }
+    }
 
-   @GetMapping("/{id}")
+    @GetMapping("/{id}")
     public ProductResponse findById(@PathVariable Long id){
         return productService.getProductById(id);
-   }
+    }
+
+
 }
