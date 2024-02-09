@@ -31,6 +31,7 @@ public class User implements UserDetails {
     private int age;
     private String telNumber;
     private LocalDate createDate;
+    private int pinCode;
 
     @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, fetch = FetchType.EAGER)
     @JoinTable(name = "users_and_roles",
