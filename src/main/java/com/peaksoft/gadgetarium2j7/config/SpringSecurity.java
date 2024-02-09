@@ -55,6 +55,18 @@ public class SpringSecurity {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> {
                     authorize.requestMatchers("/api/users/sign-up","/api/auth/sing-up", "/api/auth/sign-in","/products","/products/search").permitAll()
+
+                            .requestMatchers("/api/products/add-product").hasAuthority("ADMIN")
+                            .requestMatchers("/api/products/setDescription/{id}").hasAnyAuthority("ADMIN", "USER")
+                            .requestMatchers("/api/products/setPriceAndQuantity/{id}").hasAuthority("ADMIN")
+                            .requestMatchers("/api/products/{id}").hasAuthority("ADMIN")
+                            .requestMatchers("/api/products/get-all").hasAnyAuthority("ADMIN", "USER")
+                            .requestMatchers("/api/products/search-product/{id}").hasAnyAuthority("ADMIN", "USER")
+                            .requestMatchers("/api/products/compare-product/{id}").hasAnyAuthority("ADMIN", "USER")
+                            .requestMatchers("/api/products/search-product-by-filter").hasAnyAuthority("ADMIN", "USER")
+                            .requestMatchers("/api/products/delete").hasAnyAuthority("ADMIN", "USER")
+                            .requestMatchers("/api/products/get-all-products-by-category").hasAnyAuthority("ADMIN", "USER")
+
                             .anyRequest().authenticated();
                 })
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
