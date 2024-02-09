@@ -15,7 +15,6 @@ public class ProductMapper {
         product.setMemory(productRequest.getMemory());
         product.setColor(productRequest.getColor());
         product.setCreatDate(LocalDate.now());
-        product.setGender(productRequest.getGender());
         product.setSimCard(productRequest.getSimCard());
         product.setWirelessInterface(productRequest.getWirelessInterface());
         product.setWaterResistance(productRequest.getWaterResistance());

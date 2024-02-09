@@ -4,7 +4,6 @@ import com.peaksoft.gadgetarium2j7.exception.EntityNotFoundException;
 import com.peaksoft.gadgetarium2j7.exception.PasswordsDoNotMatchException;
 import com.peaksoft.gadgetarium2j7.service.MailService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;

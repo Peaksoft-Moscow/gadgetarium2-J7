@@ -31,6 +31,8 @@ public class User implements UserDetails {
     private int age;
     private String telNumber;
     private LocalDate createDate;
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
     private int pinCode;
 
     @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, fetch = FetchType.EAGER)
@@ -38,8 +40,6 @@ public class User implements UserDetails {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<Role> roles;
-    @Enumerated(EnumType.STRING)
-    private Gender gender;
 
     @JsonIgnore
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
@@ -59,6 +59,12 @@ public class User implements UserDetails {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "newsLetter_id")
     private NewsLetter newsLetter;
+
+    @ManyToMany(cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH},fetch = FetchType.EAGER)
+    @JoinTable(name = "compares_products",
+            joinColumns = @JoinColumn(name="user_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id"))
+    private List<Product>products;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
