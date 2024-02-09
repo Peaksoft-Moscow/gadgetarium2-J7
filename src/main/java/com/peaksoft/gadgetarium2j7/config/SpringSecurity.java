@@ -57,7 +57,7 @@ public class SpringSecurity {
                     authorize
                             .requestMatchers("/api/users/sign-up","/api/auth/sing-up", "/api/auth/sign-in","/products","/products/search").permitAll()
 
-                            .requestMatchers("/api/products/add-product").hasAnyAuthority("ADMIN","USER")
+                            .requestMatchers("/api/products/add-product").hasAuthority("ADMIN")
 
 
                             .requestMatchers("/api/comments/add/comment/{id}").hasAnyAuthority("ADMIN","USER")
