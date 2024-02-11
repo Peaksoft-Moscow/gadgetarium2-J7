@@ -15,7 +15,6 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/products")
 @Tag(name = "Product")
 @SecurityRequirement(name = "Authorization")
 @RequestMapping("/api/products")
