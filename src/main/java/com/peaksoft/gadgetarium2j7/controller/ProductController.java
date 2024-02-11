@@ -2,6 +2,8 @@ package com.peaksoft.gadgetarium2j7.controller;
 
 import com.peaksoft.gadgetarium2j7.model.dto.*;
 import com.peaksoft.gadgetarium2j7.service.ProductService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -13,6 +15,8 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@Tag(name = "Product")
+@SecurityRequirement(name = "Authorization")
 @RequestMapping("/api/products")
 public class ProductController {
 

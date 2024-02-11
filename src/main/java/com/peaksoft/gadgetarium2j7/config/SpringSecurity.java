@@ -55,6 +55,9 @@ public class SpringSecurity {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> {
                     authorize.requestMatchers("/api/users/sign-up","/api/auth/sing-up", "/api/auth/sign-in","/products","/products/search").permitAll()
+                            .requestMatchers("/swagger-ui/**",
+                                    "/swagger-resources/*",
+                                    "/v3/api-docs/**").permitAll()
 
                             .requestMatchers("/api/products/add-product").hasAuthority("ADMIN")
                             .requestMatchers("/api/products/setDescription/{id}").hasAnyAuthority("ADMIN", "USER")
