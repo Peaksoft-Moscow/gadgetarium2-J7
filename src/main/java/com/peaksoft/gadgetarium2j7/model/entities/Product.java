@@ -26,6 +26,7 @@ public class Product {
     String name;
     int weight;
     String color;
+    @Transient
     String brandName;
     @JsonIgnore
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
@@ -49,8 +50,8 @@ public class Product {
     int inStock;
     @Enumerated(value=EnumType.STRING)
     OperationSystem operatingSystem;
-    @Enumerated(value=EnumType.STRING)
-    Gender gender;
+//    @Enumerated(value=EnumType.STRING)
+//    Gender gender;
     String image;
     @Enumerated(value=EnumType.STRING)
     WirelessInterface wirelessInterface;
@@ -63,6 +64,8 @@ public class Product {
     String description;
     int totalPrice;
     int quantity;
+    @Transient
+    String categoryName;
     @Enumerated(value= EnumType.STRING)
     SubCategory subCategory;
 
@@ -78,5 +81,7 @@ public class Product {
     @JoinTable(name = "product_orders", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "order_id"))
     private List<Order> orderList = new ArrayList<>();
 
-
+    @JsonIgnore
+    @ManyToMany(mappedBy = "products", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    List<User>users;
 }

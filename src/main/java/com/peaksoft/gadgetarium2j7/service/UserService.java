@@ -74,7 +74,7 @@ public class UserService {
         }
 
         List<Role> roles = new ArrayList<>();
-        Role role = new Role("USER");
+        Role role = new Role("ADMIN");
         roles.add(role);
         user.setRoles(roles);
         userRepository.save(user);
