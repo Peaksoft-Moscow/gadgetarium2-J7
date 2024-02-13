@@ -51,9 +51,9 @@ public class User implements UserDetails {
     private List<PayCard> paymentPayCard;
 
     @JsonIgnore
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "basket_id")
+    @OneToOne(cascade = {CascadeType.ALL},mappedBy = "user")
     private Basket basket;
+
 
     @JsonIgnore
     @OneToOne(cascade = CascadeType.ALL)

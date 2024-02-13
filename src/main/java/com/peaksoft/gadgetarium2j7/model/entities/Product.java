@@ -41,7 +41,7 @@ public class Product {
     double discount;
     LocalDate creatDate;
     String rating;
-    double price;
+    int price;
     String watchband;
     String theMaterialOfTheCase;
     String smartWatchSize;
@@ -80,6 +80,9 @@ public class Product {
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "product_orders", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "order_id"))
     private List<Order> orderList = new ArrayList<>();
+
+ @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.REFRESH,CascadeType.DETACH},mappedBy = "products")
+  private List<Basket>baskets;
 
     @JsonIgnore
     @ManyToMany(mappedBy = "products", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
