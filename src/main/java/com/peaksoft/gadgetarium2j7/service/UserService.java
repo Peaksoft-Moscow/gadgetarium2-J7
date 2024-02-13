@@ -3,6 +3,7 @@ package com.peaksoft.gadgetarium2j7.service;
 import com.peaksoft.gadgetarium2j7.mapper.UserMapper;
 import com.peaksoft.gadgetarium2j7.model.dto.RegistrationRequest;
 import com.peaksoft.gadgetarium2j7.model.dto.RegistrationResponse;
+import com.peaksoft.gadgetarium2j7.model.entities.Basket;
 import com.peaksoft.gadgetarium2j7.model.entities.Role;
 import com.peaksoft.gadgetarium2j7.model.entities.User;
 import com.peaksoft.gadgetarium2j7.repository.UserRepository;
@@ -77,6 +78,9 @@ public class UserService {
         Role role = new Role("ADMIN");
         roles.add(role);
         user.setRoles(roles);
+        Basket basket = new Basket();
+        user.setBasket(basket);
+        basket.setUser(user);
         userRepository.save(user);
         return userMapper.registration(user);
     }
