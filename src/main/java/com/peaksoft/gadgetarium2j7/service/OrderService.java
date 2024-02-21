@@ -41,9 +41,9 @@ public class OrderService {
     }
 
     public Order addUserInfoToOrder(Order order, Principal principal) {
-        String userEmail = principal.getName();
+        Long userId = Long.valueOf(principal.getName());
 
-        Optional<User> userInfoOptional = userRepository.findByEmail(userEmail);
+        Optional<User> userInfoOptional = userRepository.findUserInfoById(userId);
         User userInfo = userInfoOptional.orElseThrow(() -> new EntityNotFoundException("User not found"));
 
         order.setName(userInfo.getName());
@@ -75,14 +75,14 @@ public class OrderService {
         return orderRepository.save(order);
     }
 
-    public List<Object[]> getTotalAmountAndDeliveryInfo(Principal principal) {
-        String userEmail = principal.getName();
-        return orderRepository.getTotalAmountAndDeliveryInfoByEmail(userEmail);
-    }
-
-    public int countOrderByUserAndDateRange(String email, LocalDateTime startDate, LocalDateTime endDate) {
-        return orderRepository.countOrderByUserAndDateRange(email, startDate, endDate);
-    }
+//    public List<Object[]> getTotalAmountAndDeliveryInfo(Principal principal) {
+//        String userEmail = principal.getName();
+//        return orderRepository.getTotalAmountAndDeliveryInfoByEmail(userEmail);
+//    }
+//
+//    public int countOrderByUserAndDateRange(String email, LocalDateTime startDate, LocalDateTime endDate) {
+//        return orderRepository.countOrderByUserAndDateRange(email, startDate, endDate);
+//    }
 
     public int generateSevenDigitRandomNumber() {
         Random random = new Random();

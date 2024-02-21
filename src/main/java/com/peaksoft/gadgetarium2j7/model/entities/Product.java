@@ -90,11 +90,4 @@ public class Product {
     @ManyToMany(mappedBy = "products", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     List<User>users;
 
-    @ManyToMany
-    @JoinTable(
-            name = "order_bankcard",
-            joinColumns = @JoinColumn(name = "order_id"),
-            inverseJoinColumns = @JoinColumn(name = "bankcard_id")
-    )
-    private Set<BankCard> bankCards = new HashSet<>();
 }

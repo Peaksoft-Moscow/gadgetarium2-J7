@@ -1,6 +1,7 @@
 package com.peaksoft.gadgetarium2j7.model.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.peaksoft.gadgetarium2j7.model.enums.DeliveryOptions;
 import com.peaksoft.gadgetarium2j7.model.enums.Gender;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -34,6 +35,7 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Gender gender;
     private int pinCode;
+    private DeliveryOptions deliveryOptions;
 
     @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, fetch = FetchType.EAGER)
     @JoinTable(name = "users_and_roles",

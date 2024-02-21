@@ -63,26 +63,26 @@ public class OrderController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
-    @GetMapping("/orders/summary")
-    public ResponseEntity<List<Object[]>> getOrderSummary(Principal principal) {
-        try {
-            List<Object[]> summary = orderService.getTotalAmountAndDeliveryInfo(principal);
-            return ResponseEntity.ok(summary);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
+//    @GetMapping("/orders/summary")
+//    public ResponseEntity<List<Object[]>> getOrderSummary(Principal principal) {
+//        try {
+//            List<Object[]> summary = orderService.getTotalAmountAndDeliveryInfo(principal);
+//            return ResponseEntity.ok(summary);
+//        } catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+//        }
+//    }
     @GetMapping("/orders/generateRandomNumber")
     public String generateRandomNumberWithPrefix() {
         int randomNumber = orderService.generateSevenDigitRandomNumber();
         return "НОМЕР ЗАЯВКИ " + randomNumber;
     }
-    @GetMapping("/orders/count")
-    public int countOrderByUserAndDateRange(@RequestParam String email,
-                                            @RequestParam LocalDateTime startDate,
-                                            @RequestParam LocalDateTime endDate) {
-        return orderService.countOrderByUserAndDateRange(email, startDate, endDate);
-    }
+//    @GetMapping("/orders/count")
+//    public int countOrderByUserAndDateRange(@RequestParam String email,
+//                                            @RequestParam LocalDateTime startDate,
+//                                            @RequestParam LocalDateTime endDate) {
+//        return orderService.countOrderByUserAndDateRange(email, startDate, endDate);
+//    }
     @PostMapping("/clearBasket")
     public void clearBasket(Principal principal) {
         basketService.clearBasket(principal);
