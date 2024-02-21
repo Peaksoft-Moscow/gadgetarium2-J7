@@ -47,7 +47,7 @@ public class OrderService {
         User userInfo = userInfoOptional.orElseThrow(() -> new EntityNotFoundException("User not found"));
 
         order.setName(userInfo.getName());
-        order.setSurname(userInfo.getLastName());
+        order.setLastName(userInfo.getLastName());
         order.setEmail(userInfo.getEmail());
         order.setPhoneNumber(userInfo.getTelNumber());
 

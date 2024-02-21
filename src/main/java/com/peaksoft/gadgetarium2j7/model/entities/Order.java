@@ -27,7 +27,7 @@ public class Order {
     private String userAddress;
     private LocalDate orderDate;
     private String name;
-    private String surname;
+    private String lastName;
     private String email;
     private String phoneNumber;
     private DeliveryOptions deliveryOptions;
