@@ -7,17 +7,18 @@ import com.peaksoft.gadgetarium2j7.model.entities.Order;
 import com.peaksoft.gadgetarium2j7.model.entities.PayCard;
 import com.peaksoft.gadgetarium2j7.model.entities.User;
 import com.peaksoft.gadgetarium2j7.model.enums.PaymentMethod;
+import com.peaksoft.gadgetarium2j7.repository.OrderRepository;
 import com.peaksoft.gadgetarium2j7.repository.UserRepository;
 import com.peaksoft.gadgetarium2j7.service.BasketService;
 import com.peaksoft.gadgetarium2j7.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.MailSender;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.time.LocalDateTime;
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -27,7 +28,7 @@ public class OrderController {
     private final OrderService orderService;
     private final UserRepository userRepository;
     private final BasketService basketService;
-
+    private final OrderRepository orderRepository;
 
 
     @PostMapping("/order")
@@ -63,26 +64,50 @@ public class OrderController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
-//    @GetMapping("/orders/summary")
-//    public ResponseEntity<List<Object[]>> getOrderSummary(Principal principal) {
-//        try {
-//            List<Object[]> summary = orderService.getTotalAmountAndDeliveryInfo(principal);
-//            return ResponseEntity.ok(summary);
-//        } catch (Exception e) {
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-//        }
-//    }
-    @GetMapping("/orders/generateRandomNumber")
-    public String generateRandomNumberWithPrefix() {
-        int randomNumber = orderService.generateSevenDigitRandomNumber();
-        return "НОМЕР ЗАЯВКИ " + randomNumber;
+    @GetMapping("/total")
+    public ResponseEntity<Double> getTotalBasketAmount(Principal principal) {
+        double totalAmount = basketService.getTotalBasketAmount(principal);
+        return ResponseEntity.ok(totalAmount);
     }
-//    @GetMapping("/orders/count")
-//    public int countOrderByUserAndDateRange(@RequestParam String email,
-//                                            @RequestParam LocalDateTime startDate,
-//                                            @RequestParam LocalDateTime endDate) {
-//        return orderService.countOrderByUserAndDateRange(email, startDate, endDate);
-//    }
+    @GetMapping("/{orderId}/deliveryAddress")
+    public ResponseEntity<String> getOrderDeliveryAddress(@PathVariable Long orderId) {
+        try {
+            String deliveryAddress = orderService.getOrderDeliveryAddress(orderId);
+            return ResponseEntity.ok(deliveryAddress);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/{orderId}/paymentStatus")
+    public ResponseEntity<PaymentMethod> getOrderPaymentStatus(@PathVariable Long orderId) {
+        try {
+            PaymentMethod paymentMethod = orderService.getOrderPaymentStatus(orderId);
+            return ResponseEntity.ok(paymentMethod);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(PaymentMethod.valueOf(e.getMessage()));
+        }
+    }
+
+    @GetMapping("/generateRandomNumber")
+    public ResponseEntity<String> generateRandomNumberWithPrefix() {
+        int randomNumber = orderService.generateSevenDigitRandomNumber();
+        String emailContent = "НОМЕР ЗАЯВКИ " + randomNumber;
+
+        sendEmail("recipient@example.com", "Новый заказ", emailContent);
+
+        return ResponseEntity.ok(emailContent);
+    }
+
+    private void sendEmail(String to, String subject, String text) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(to);
+        message.setSubject(subject);
+        message.setText(text);
+        MailSender javaMailSender = null;
+        javaMailSender.send(message);
+    }
+
     @PostMapping("/clearBasket")
     public void clearBasket(Principal principal) {
         basketService.clearBasket(principal);

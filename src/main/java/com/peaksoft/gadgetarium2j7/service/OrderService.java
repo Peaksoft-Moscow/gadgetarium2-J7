@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import java.security.Principal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -74,15 +73,18 @@ public class OrderService {
 
         return orderRepository.save(order);
     }
+    public String getOrderDeliveryAddress(Long orderId) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new EntityNotFoundException("Заказ не найден"));
+        return order.getAddress();
+    }
 
-//    public List<Object[]> getTotalAmountAndDeliveryInfo(Principal principal) {
-//        String userEmail = principal.getName();
-//        return orderRepository.getTotalAmountAndDeliveryInfoByEmail(userEmail);
-//    }
-//
-//    public int countOrderByUserAndDateRange(String email, LocalDateTime startDate, LocalDateTime endDate) {
-//        return orderRepository.countOrderByUserAndDateRange(email, startDate, endDate);
-//    }
+    public PaymentMethod getOrderPaymentStatus(Long orderId) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new EntityNotFoundException("Заказ не найден"));
+
+        return order.getPaymentMethod();
+    }
 
     public int generateSevenDigitRandomNumber() {
         Random random = new Random();

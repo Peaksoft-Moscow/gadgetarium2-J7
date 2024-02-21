@@ -21,7 +21,13 @@ public class Basket {
     private double discount;
     private int amount;
     private int quantity;
-
+    public double getTotal() {
+        double sum = 0;
+        for (Product product : products) {
+            sum += product.getPrice();
+        }
+        return sum;
+    }
     @JsonIgnore
     @ManyToMany(cascade ={CascadeType.PERSIST,CascadeType.REFRESH,CascadeType.DETACH})
     @JoinTable(name = "basket_products",

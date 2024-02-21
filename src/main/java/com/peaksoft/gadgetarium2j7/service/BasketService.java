@@ -144,6 +144,18 @@ public class BasketService {
 
         return basketMapper.mapToResponse(basket);
     }
+    public double getTotalBasketAmount(Principal principal) {
+        String userEmail = principal.getName();
+        User user = userRepository.findByEmail(userEmail)
+                .orElseThrow(() -> new EntityNotFoundException("Пользователь не найден"));
+
+        Basket basket = user.getBasket();
+        if (basket == null) {
+            throw new EntityNotFoundException("Корзина пользователя пуста");
+        }
+
+        return basket.getTotal();
+    }
 }
 
 
