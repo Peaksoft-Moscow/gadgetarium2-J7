@@ -66,6 +66,8 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "product_id"))
     private List<Product>products;
 
+
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles;

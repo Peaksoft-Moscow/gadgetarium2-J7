@@ -11,7 +11,9 @@ import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "products")
@@ -87,4 +89,12 @@ public class Product {
     @JsonIgnore
     @ManyToMany(mappedBy = "products", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     List<User>users;
+
+    @ManyToMany
+    @JoinTable(
+            name = "order_bankcard",
+            joinColumns = @JoinColumn(name = "order_id"),
+            inverseJoinColumns = @JoinColumn(name = "bankcard_id")
+    )
+    private Set<BankCard> bankCards = new HashSet<>();
 }
