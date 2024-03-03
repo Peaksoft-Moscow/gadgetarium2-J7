@@ -133,6 +133,30 @@ public class BasketService {
         }
         throw new EntityNotFoundException("Продукт не найден в корзине пользователя");
     }
+
+    public BasketResponse getBasket(Principal principal) {
+        User user = userRepository.findByEmail(principal.getName())
+                .orElseThrow(() -> new EntityNotFoundException("Пользователь не найден"));
+
+        Basket basket = user.getBasket();
+        if (basket == null) {
+            throw new EntityNotFoundException("Корзина пользователя пуста");
+        }
+
+        return basketMapper.mapToResponse(basket);
+    }
+    public double getTotalBasketAmount(Principal principal) {
+        String userEmail = principal.getName();
+        User user = userRepository.findByEmail(userEmail)
+                .orElseThrow(() -> new EntityNotFoundException("Пользователь не найден"));
+
+        Basket basket = user.getBasket();
+        if (basket == null) {
+            throw new EntityNotFoundException("Корзина пользователя пуста");
+        }
+
+        return basket.getTotal();
+    }
 }
 
 

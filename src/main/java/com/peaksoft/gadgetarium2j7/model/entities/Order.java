@@ -1,11 +1,14 @@
 package com.peaksoft.gadgetarium2j7.model.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.peaksoft.gadgetarium2j7.model.enums.DeliveryOptions;
+import com.peaksoft.gadgetarium2j7.model.enums.PaymentMethod;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -20,6 +23,13 @@ public class Order {
     private String address;
     private int sum;
     private String userAddress;
+    private LocalDate orderDate;
+    private String name;
+    private String lastName;
+    private String email;
+    private String phoneNumber;
+    private DeliveryOptions deliveryOptions;
+    private PaymentMethod paymentMethod;
     @JsonIgnore
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "delivery_id")

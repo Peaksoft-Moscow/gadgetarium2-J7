@@ -16,4 +16,12 @@ public class BasketMapper {
         basketResponse.setProductList(basket.getProducts());
         return basketResponse;
     }
+    public Basket mapToBasket(BasketResponse basketResponse) {
+        Basket basket = new Basket();
+        basket.setId(basketResponse.getId());
+        basket.setTotal(basketResponse.getTotal());
+        basket.setUser(basketResponse.getUser());
+        basket.setProducts(basketResponse.getProductList());
+        return basket;
+    }
 }
